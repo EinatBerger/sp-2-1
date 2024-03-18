@@ -4,7 +4,7 @@ let gCtx
 
 
 function onInit() {
-
+    top5Keywords()
     renderGallery()
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')

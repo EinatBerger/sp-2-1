@@ -21,7 +21,7 @@ function renderGallery() {
 
 function onSetFilterBy(filterBy) {
     document.querySelector('.search-keywords-list').value = filterBy
-
+    updateKeywordsCount(filterBy)
     gFilterBy = filterBy
     renderGallery()
 }
@@ -33,6 +33,7 @@ function onRandomImg() {
 }
 
 function onImgSelect(imgId) {
+    
     setImg(imgId)
     renderMeme()
 }
@@ -77,3 +78,33 @@ function renderImg(img) {
 }
 
 
+function renderKeyword() {
+    var keywords = (!gIsAllKeywords) ? gTop5Keywords : Object.keys(gKeywordSearchCountMap)
+    // Rendering keywords for datalist
+    const strHTMLs = keywords.map(keyword =>
+        `<option>${keyword}</option>`)
+
+    const elSearchKeywordsList = document.querySelector('.search-keywords-list')
+    elSearchKeywordsList.list.innerHTML = strHTMLs.join('')
+
+    // Rendering keywords for container
+    var strHTMLs2 = keywords.map(keyword =>
+        `<button onclick="onSetFilterBy('${keyword}')">${keyword}</button>`
+        ).join('')
+
+   if (!gIsAllKeywords) {
+    strHTMLs2 += `<button style="color:red;" onclick="onAllKeyword()">more..</button>`
+    }
+    else {
+    strHTMLs2 += `<button style="color:red;" onclick="onAllKeyword()">close</button>`
+    }
+    const elKeywordsContainer = document.querySelector('.keywords-container')
+    elKeywordsContainer.innerHTML = strHTMLs2
+
+}
+
+function onAllKeyword(){
+    gIsAllKeywords = !gIsAllKeywords
+    console.log('gIsAllKeywords:',gIsAllKeywords )
+    renderKeyword()
+}
