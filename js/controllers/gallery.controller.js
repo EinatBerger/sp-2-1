@@ -1,6 +1,9 @@
 'use strict'
 let gFilterBy = ''
 let savedImage
+//self list in gallery: 
+//func: memes saved, trans, font keywords.
+//design: img gal on mobile, dont see editor, keyword container
 
 function renderGallery() {
     var imgs = getImgs(gFilterBy)
@@ -33,50 +36,25 @@ function onRandomImg() {
 }
 
 function onImgSelect(imgId) {
-    
     setImg(imgId)
     renderMeme()
 }
 
 function onImgInput(ev) {
-    loadImageFromInput(ev, renderImg)
-}
 
-// Read the file from the input
-// When done send the image to the callback function
-
-function loadImageFromInput(ev, onImageReady) {
     const reader = new FileReader()
 
     reader.onload = ev => {
         let img = new Image() 
         img.src = ev.target.result 
-        img.onload = () => onImageReady(img)
+        img.onload = function () { 
+            setImgFromInput(img.src)
+            renderMeme()}
     }
-    reader.readAsDataURL(ev.target.files[0]) 
+    reader.readAsDataURL(ev.target.files[0])
 }
 
-// function onImgLoad(img) { dost work!!!
-//     console.log('img:', img)
-//     imgInput(img.src)
-//     renderMeme()
-// }
-
-function renderImg(img) {
-    // Adjust the canvas to the new image size
-    gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
-    
-    // Draw the img on the canvas
-    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-
-    // Add text on the canvas
-    gCtx.font = '20px Arial'
-    gCtx.fillStyle = 'white'
-    gCtx.fillText('Your text will be Added Here', 10, 30)
-
-    // imgInput(img)//dost work!!!
-}
-
+//////////////////////////////////////////////////////////////////
 
 function renderKeyword() {
     var keywords = (!gIsAllKeywords) ? gTop5Keywords : Object.keys(gKeywordSearchCountMap)

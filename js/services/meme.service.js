@@ -37,13 +37,13 @@ function setImg(imgId) {
     return gMeme
 }
 
-// function imgInput(imgSrc) { //dost work!!!
-//     gMeme.isImgInput=true
-//     gMeme.imgSrc = imgSrc
+function setImgFromInput(imgSrc) { 
+    gMeme.isImgInput=true
+    gMeme.imgSrc = imgSrc
     
-//     console.log('gMeme:', gMeme)
-//     return gMeme
-// }
+    console.log('gMeme:', gMeme)
+    return gMeme
+}
 
 function setLineTxt(newText) {
     gMeme.lines[0].txt = newText

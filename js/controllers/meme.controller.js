@@ -63,11 +63,10 @@ function renderMeme() {
         gCtx.strokeRect(boxX, y - size - 5, boxWidth, boxHeight)
 
     }
-    img.src = 'img/' + meme.selectedImgId + '.jpg'
+
+    img.src = (!meme.isImgInput) ?'img/' + meme.selectedImgId + '.jpg':meme.imgSrc
     // Adjust the canvas to the new image size
     gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
-
-    // img.src = `img/${meme.selectedImgId}.jpg`
 }
 
 
