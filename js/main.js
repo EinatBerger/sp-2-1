@@ -25,6 +25,16 @@ function resizeCanvas() {
 
 
 
+////////////////////////////////////////////////////////////////////
+function toggleMenu() {
+    document.body.classList.toggle('menu-open');
+    var toggleBtn = document.querySelector('.toggle-menu-btn');
+    if (document.body.classList.contains('menu-open')) {
+        toggleBtn.innerText = 'x';
+    } else {
+        toggleBtn.innerText = '☰';
+    }
+}
 
 
 

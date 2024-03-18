@@ -100,7 +100,7 @@ function renderKeyword() {
     }
     const elKeywordsContainer = document.querySelector('.keywords-container')
     elKeywordsContainer.innerHTML = strHTMLs2
-
+    console.log('gKeywordSearchCountMap:',gKeywordSearchCountMap )
 }
 
 function onAllKeyword(){

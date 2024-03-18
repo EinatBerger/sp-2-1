@@ -1,5 +1,5 @@
 /* MOBILE ONLY */
-@media (max-width: 640px) {
+@media (max-width: 920px) {
 
     .main-nav {
         margin-top: 100px;
@@ -34,12 +34,8 @@
     .keywords-container {
         display: none;
     }
-
    
 }
-
-
-
 
 /* MEDIUM 880+20 from each side*/
 @media (min-width: 920px) {

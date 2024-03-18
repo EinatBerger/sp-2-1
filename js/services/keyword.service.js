@@ -1,4 +1,5 @@
 var gIsAllKeywords = false
+var gKeywordSearchCountMap={}
 var gKeywordSearchCountMap = {
     'funny': 8,
     'happy': 12,
@@ -34,6 +35,7 @@ function top5Keywords() {
 
 function updateKeywordsCount(keyword) {
     gKeywordSearchCountMap[keyword]++
+    
 }
 
 
