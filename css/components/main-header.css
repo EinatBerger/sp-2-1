@@ -1,0 +1,24 @@
+.main-header {
+  height: 100px;
+  background-color: var(--primary-1);
+}
+
+.logo {
+  color: var(--primary--2);
+  font-size: 1.714285em;
+}
+
+li>*{
+  margin: 5px 5px 5px 5px;
+ /* Adjust spacing between */ 
+}
+
+.nav-btn {
+  border: none;
+  border-radius: 12px;
+  color: var(--primary-1);
+  padding: 5px 20px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}

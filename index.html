@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+
+<body class="main-layout" onload="onInit()">
+
+    <div class="main-screen" onclick="toggleMenu()"></div>
+
+    <header class="main-header full main-layout">
+        <div class="flex space-between align-center">
+            <div class="logo">Meme generator</div>
+            <nav class="main-nav">
+                <ul class="main-nav-list clean-list flex">
+                    <li><button class="nav-btn" onclick="onInit()">Memes Gallery</button></li>
+                    <li><button class="nav-btn" onclick="onLoad()">Memes Saved</button></li>
+                    <li><button class="nav-btn" onclick="onRandomImg()">I'm Flexible</button></li>
+                </ul>
+            </nav>
+            <select class="language">
+                <option value="en">English</option>
+                <option value="he">עברית</option>
+            </select>
+            <button class="toggle-menu-btn" type="button" onclick="toggleMenu()">☰</button>
+        </div>
+    </header>
+
+    <section class="gallery">
+        <section class="filter-search flex align-center">
+            <input class="search-keywords-list" list="keywords-list" placeholder="search"
+                oninput="onSetFilterBy(this.value)">
+            <datalist id="keywords-list"></datalist>
+            <!-- render keywords-list -->
+            <div class="keywords-container"></div>
+            <!-- render keywords-btn -->
+        </section>
+        <section class="gallery-imgs-grid-container"> 
+            <!-- render imgs -->
+        </section>
+
+    </section>
+    <section class="editor-container">
+        <section class="canvas-container">
+            <canvas width="500" height="500"></canvas>
+        </section>
+        <section class="meme-editor flex dir-col">
+            <div class="text-line">
+                <input class="text-input" type="text" placeholder="Add Text Here" oninput="OnSetLineTxt(0,this)">
+                <div class="text-line-buttons">
+                    <button class="btn up"><img class="icons" src="/icons/up.png"></button>
+                    <button class="btn down"><img class="icons" src="/icons/down.png"></button>
+                    <button class="btn switch"><img class="icons" src="/icons/switch.png"></button>
+                    <button class="btn add"><img class="icons" src="/icons/add.png"></button>
+                    <button class="btn delete"><img class="icons" src="/icons/trash.png"></button>
+                </div>
+            </div>
+            <div class="fonts-buttons flex wrap center">
+                <button class="btn decrease-font" value="-2" onclick="OnSetLineTxtSize(this.value)"><img class="icons" src="/icons/decrease-font.png"></button>
+                <button class="btn increase-font" value="+2" onclick="OnSetLineTxtSize(this.value)"><img class="icons" src="/icons/increase-font.png"></button>
+                <button class="btn align-to-end" value="end" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="/icons/align-to-left.png"></button>
+                <button class="btn align-to-center" value="center" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="/icons/align-to-center.png"></button>
+                <button class="btn align-to-start" value="start" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="/icons/align-to-right.png"></button>
+                <select class="font-family" onchange="OnSetLineTxtFont(this.value)">
+                    <option value="'Times New Roman'">Times New Roman</option>
+                    <option value="Arial, Helvetica">Arial</option>
+                    <option value="'Courier New'">Courier New</option>
+                    <option value="'Comic Sans MS'">Comic Sans MS</option>
+                </select>
+                <button class="btn-stroke" onclick="OnSetLineTxtStrokeText()"><img class="icons" src="/icons/stroke.png"></button>
+                <button class="btn-font-color">
+                    <img class="icons" src="/icons/font-color.png">
+                    <input class="font-color" type="color" value="#0000FF" onchange="OnSetLineTxtColor(this.value)">
+                </button>
+            </div>
+            <div class="emoji-container flex wrap center">
+                <button class="btn">Save</button>
+                <span>|</span>
+                <a href="#" class="btn">Download jpeg</a>
+                <span>|</span>
+                <button class="btn">Share to Facebook</button>
+            </div>
+            <div class="actions-buttons flex wrap center">
+                <button class="btn" onclick="onSave()">Save</button>
+                <span>|</span>
+                <a href="#" class="btn" onclick="onDownloadImg(this)" download="my-img.jpg">Download jpeg</a>
+                <span>|</span>
+                <button class="btn" onclick="onShareImg()">Share to Facebook</button>
+            </div>
+        </section>
+    </section>
+
+    <div class="user-msg hide"></div>
+
+    <script src="js/services/util.service.js"></script>
+    <script src="js/services/storage.service.js"></script>
+    <script src="js/services/keyword.service.js"></script>
+    <script src="js/services/img.service.js"></script>
+    <script src="js/services/meme.service.js"></script>
+    <script src="js/controllers/gallery.controller.js"></script>
+    <script src="js/controllers/meme.controller.js"></script>
+    <script src="js/main.js"></script>
+
+
+</body>
+
+</html>

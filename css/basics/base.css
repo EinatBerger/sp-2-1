@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color: var(--primary-base);
+}
+
+body {
+  margin: 0;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 0.875rem;
+}
+
+img {
+  width: 100%;
+}
+
+.hide {
+  display: none;
+}
+
+.icons {
+  height: 26px;
+  width: 26px;
+}
+
+.user-msg {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--primary--1);
+  padding: 10px;
+  border-radius: 4px;
+}
