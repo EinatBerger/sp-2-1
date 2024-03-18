@@ -9,12 +9,11 @@
 </head>
 
 
-<body class="main-layout" onload="onInit()">
+<body onload="onInit()">
 
     <div class="main-screen" onclick="toggleMenu()"></div>
 
-    <header class="main-header full main-layout">
-        <div class="flex space-between align-center">
+    <header class="main-header flex space-between align-center">
             <div class="logo">Meme generator</div>
             <nav class="main-nav">
                 <ul class="main-nav-list clean-list flex">
@@ -28,7 +27,6 @@
                 <option value="he">עברית</option>
             </select>
             <button class="toggle-menu-btn" type="button" onclick="toggleMenu()">☰</button>
-        </div>
     </header>
 
     <section class="gallery">
@@ -45,7 +43,7 @@
         </section>
 
     </section>
-    <section class="editor-container">
+    <section class="editor-container hide">
         <section class="canvas-container">
             <canvas width="500" height="500"></canvas>
         </section>

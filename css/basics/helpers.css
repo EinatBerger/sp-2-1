@@ -1,5 +1,5 @@
 /* flex helpers */
-.flex {
+.flex { 
   display: flex;
 }
 
@@ -9,7 +9,7 @@
 .flex.dir-col {
   flex-direction: column;
 }
-.flex.space-between {
+.flex.space-between{
   justify-content: space-between;
 }
 

@@ -31,9 +31,19 @@
         background-color: var(--primary-base);
     }
     
+    .search-keywords-list{
+        height: 60px;
+        font-size: 1em;
+    }
+
     .keywords-container {
         display: none;
     }
+    .gallery-imgs-grid-container {
+    max-width: var(--m-img-container);
+    }
+
+
    
 }
 
@@ -47,7 +57,9 @@
         flex-direction: row;
     }
 
-    .editor-container {
+
+
+    /* .editor-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
         column-gap: 40px;
@@ -59,11 +71,9 @@
 
     .editor-container>*:last-child {
         grid-column: 2;
-    }
+    } */
+/* 
 
-    .gallery-imgs-grid-container {
-        max-width: var(--l-img-container);
-    }
 }
 
 /* LARGE 1060+20 from each side */
