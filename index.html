@@ -52,7 +52,7 @@
         <section class="meme-editor flex dir-col">
             <div class="text-line">
                 <input class="text-input" type="text" placeholder="Add Text Here" oninput="OnSetLineTxt(0,this)">
-                <div class="text-line-buttons">
+                <div class="text-line-buttons">icons
                     <button class="btn up"><img class="icons" src="icons/up.png"></button>
                     <button class="btn down"><img class="icons" src="icons/down.png"></button>
                     <button class="btn switch"><img class="icons" src="icons/switch.png"></button>
@@ -61,20 +61,20 @@
                 </div>
             </div>
             <div class="fonts-buttons flex wrap center">
-                <button class="btn decrease-font" value="-2" onclick="OnSetLineTxtSize(this.value)"><img class="icons" src="/icons/decrease-font.png"></button>
-                <button class="btn increase-font" value="+2" onclick="OnSetLineTxtSize(this.value)"><img class="icons" src="/icons/increase-font.png"></button>
-                <button class="btn align-to-end" value="end" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="/icons/align-to-left.png"></button>
-                <button class="btn align-to-center" value="center" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="/icons/align-to-center.png"></button>
-                <button class="btn align-to-start" value="start" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="/icons/align-to-right.png"></button>
+                <button class="btn decrease-font" value="-2" onclick="OnSetLineTxtSize(this.value)"><img class="icons" src="icons/decrease-font.png"></button>
+                <button class="btn increase-font" value="+2" onclick="OnSetLineTxtSize(this.value)"><img class="icons" src="icons/increase-font.png"></button>
+                <button class="btn align-to-end" value="end" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="icons/align-to-left.png"></button>
+                <button class="btn align-to-center" value="center" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="icons/align-to-center.png"></button>
+                <button class="btn align-to-start" value="start" onclick="OnSetLineTxtAlignment(this.value)"><img class="icons" src="icons/align-to-right.png"></button>
                 <select class="font-family" onchange="OnSetLineTxtFont(this.value)">
                     <option value="'Times New Roman'">Times New Roman</option>
                     <option value="Arial, Helvetica">Arial</option>
                     <option value="'Courier New'">Courier New</option>
                     <option value="'Comic Sans MS'">Comic Sans MS</option>
                 </select>
-                <button class="btn-stroke" onclick="OnSetLineTxtStrokeText()"><img class="icons" src="/icons/stroke.png"></button>
+                <button class="btn-stroke" onclick="OnSetLineTxtStrokeText()"><img class="icons" src="icons/stroke.png"></button>
                 <button class="btn-font-color">
-                    <img class="icons" src="/icons/font-color.png">
+                    <img class="icons" src="icons/font-color.png">
                     <input class="font-color" type="color" value="#0000FF" onchange="OnSetLineTxtColor(this.value)">
                 </button>
             </div>
