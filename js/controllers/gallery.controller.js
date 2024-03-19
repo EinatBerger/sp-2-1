@@ -6,6 +6,11 @@ let savedImage
 //design: img gal on mobile, dont see editor, keyword container
 
 function renderGallery() {
+    const elGallery = document.querySelector('.gallery')
+    elGallery.classList.remove('hide')
+    const elEditor = document.querySelector('.editor-container')
+    elEditor.classList.add('hide')
+
     var imgs = getImgs(gFilterBy)
 
     var strHTMLs =`<label for="image" class="file-label">Upload Your Own Image File</label>

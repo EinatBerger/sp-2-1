@@ -4,6 +4,12 @@ function renderMeme() {
     const meme = getMeme()
     if (!meme || meme.length === 0) return
 
+
+    const elEditor = document.querySelector('.editor-container')
+    elEditor.classList.remove('hide')
+    const elGallery = document.querySelector('.gallery')
+    elGallery.classList.add('hide')
+
     // Draw the img on the canvas
     const img = new Image()
     img.onload = function () {
