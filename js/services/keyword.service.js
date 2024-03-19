@@ -1,4 +1,4 @@
-var gIsAllKeywords = false
+
 var gKeywordSearchCountMap={}
 var gKeywordSearchCountMap = {
     'funny': 8,

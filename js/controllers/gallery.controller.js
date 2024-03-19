@@ -1,6 +1,8 @@
 'use strict'
 let gFilterBy = ''
 let savedImage
+
+var gIsAllKeywords = false
 //self list in gallery: 
 //func: memes saved, trans, font keywords.
 //design: img gal on mobile, dont see editor, keyword container
@@ -28,7 +30,7 @@ function renderGallery() {
 }
 
 function onSetFilterBy(filterBy) {
-    document.querySelector('.search-keywords-list').value = filterBy
+    document.querySelector('.search-list').value = filterBy
     updateKeywordsCount(filterBy)
     gFilterBy = filterBy
     renderGallery()
@@ -62,15 +64,17 @@ function onImgInput(ev) {
 //////////////////////////////////////////////////////////////////
 
 function renderKeyword() {
-    var keywords = (!gIsAllKeywords) ? gTop5Keywords : Object.keys(gKeywordSearchCountMap)
+    var AllKeywords = Object.keys(gKeywordSearchCountMap)
     // Rendering keywords for datalist
-    const strHTMLs = keywords.map(keyword =>
+    const strHTMLs = AllKeywords.map(keyword =>
         `<option>${keyword}</option>`)
 
-    const elSearchKeywordsList = document.querySelector('.search-keywords-list')
+    const elSearchKeywordsList = document.querySelector('.search-list')
     elSearchKeywordsList.list.innerHTML = strHTMLs.join('')
 
     // Rendering keywords for container
+    var keywords = (!gIsAllKeywords) ? gTop5Keywords : Object.keys(gKeywordSearchCountMap)
+
     var strHTMLs2 = keywords.map(keyword =>
         `<button onclick="onSetFilterBy('${keyword}')">${keyword}</button>`
         ).join('')
@@ -90,4 +94,10 @@ function onAllKeyword(){
     gIsAllKeywords = !gIsAllKeywords
     console.log('gIsAllKeywords:',gIsAllKeywords )
     renderKeyword()
+}
+
+function onClearFilter(){
+    document.querySelector('.search-list').value = ""
+    gFilterBy = ""
+    renderGallery()
 }
