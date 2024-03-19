@@ -29,7 +29,7 @@
             <button class="toggle-menu-btn" type="button" onclick="toggleMenu()">☰</button>
     </header>
 
-    <section class="gallery">
+    <section class="gallery hide">
         <section class="filter-search flex align-center">
             <input class="search-keywords-list" list="keywords-list" placeholder="search"
                 oninput="onSetFilterBy(this.value)">
@@ -43,14 +43,14 @@
         </section>
 
     </section>
-    <section class="editor-container hide">
+    <section class="editor-container flex">
         <section class="canvas-container">
             <canvas width="500" height="500"></canvas>
         </section>
         <section class="meme-editor flex dir-col">
             <div class="text-line">
                 <input class="text-input" type="text" placeholder="Add Text Here" oninput="OnSetLineTxt(0,this)">
-                <div class="text-line-buttons">icons
+                <div class="text-line-buttons">
                     <button class="btn up"><img class="icons" src="icons/up.png"></button>
                     <button class="btn down"><img class="icons" src="icons/down.png"></button>
                     <button class="btn switch"><img class="icons" src="icons/switch.png"></button>

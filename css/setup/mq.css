@@ -43,7 +43,9 @@
     max-width: var(--m-img-container);
     }
 
-
+    .editor-container{
+        flex-direction: column;
+    }
    
 }
 
@@ -57,24 +59,8 @@
         flex-direction: row;
     }
 
-
-
-    /* .editor-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 40px;
-    }
-
-    .editor-container>*:first-child {
-        grid-column: 1;
-    }
-
-    .editor-container>*:last-child {
-        grid-column: 2;
-    } */
-/* 
-
 }
+
 
 /* LARGE 1060+20 from each side */
 @media (min-width: 1100px) {
