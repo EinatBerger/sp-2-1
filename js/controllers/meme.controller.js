@@ -4,75 +4,95 @@ function renderMeme() {
     const meme = getMeme()
     if (!meme || meme.length === 0) return
 
+    // Draw the img on the canvas
+    const img = new Image()
+    img.onload = function () {
+        // Draw the img on the canvas
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        
+        const x = gElCanvas.width / 2
+        const y = gElCanvas.height * 0.2
+        // Draw text
+        drawText(x,y)
+        const text = meme.lines[meme.selectedLineIdx].txt   
+        const textWidth = CalcTextWidth(text)
+        // Draw textBox (rect)
+        drawTxtBox(textWidth,x,y)
+    }
+
+    img.src = (!meme.isImgInput) ?'img/' + meme.selectedImgId + '.jpg':meme.imgSrc
+    // Adjust the canvas to the new image size
+    gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
 
     const elEditor = document.querySelector('.editor-container')
     elEditor.classList.remove('hide')
     const elGallery = document.querySelector('.gallery')
     elGallery.classList.add('hide')
 
-    // Draw the img on the canvas
-    const img = new Image()
-    img.onload = function () {
-        // Draw the img on the canvas
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+}
 
-        const x = gElCanvas.width / 2
-        const y = gElCanvas.height * 0.2
+function drawText(x,y) {
+    const meme = getMeme()
+    if (!meme || meme.length === 0) return
 
-        // Draw text
-        const text = meme.lines[meme.selectedLineIdx].txt
-        // Calculate text width
-        const metrics = gCtx.measureText(text)
-        const textWidth = metrics.width
-        //  text height
-        const size = meme.lines[meme.selectedLineIdx].size
+    // Draw text
+    const text = meme.lines[meme.selectedLineIdx].txt   
+    const size = meme.lines[meme.selectedLineIdx].size
+    const font = meme.lines[meme.selectedLineIdx].font
+    const textAlign = meme.lines[meme.selectedLineIdx].textAlign
+    const fontColor = meme.lines[meme.selectedLineIdx].fontColor
+    const isStrokeText = meme.lines[meme.selectedLineIdx].isStrokeText
 
-        const font = meme.lines[meme.selectedLineIdx].font
-        const textAlign = meme.lines[meme.selectedLineIdx].textAlign
-        console.log('textAlign:',textAlign )
-        const isStrokeText = meme.lines[meme.selectedLineIdx].isStrokeText
-        const fontColor = meme.lines[meme.selectedLineIdx].fontColor
+    gCtx.font = size + 'px ' + font
+    gCtx.textAlign = textAlign
+    gCtx.fillStyle = fontColor
+    gCtx.strokeStyle = fontColor
 
-        gCtx.font = size + 'px ' + font
-        gCtx.textAlign = textAlign
-        gCtx.fillStyle = fontColor
-        gCtx.strokeStyle = fontColor
-
-        if (isStrokeText) {
-            gCtx.strokeText(text, x, y)
-        } else {
-            gCtx.fillText(text, x, y)
-        }
-
-
-        // Draw textBox (rect)
-        const maxWidth = gElCanvas.width
-        const minWidth = gElCanvas.width * 0.6
-        //  BoxText Width
-        var boxWidth = (textWidth + 20 > minWidth) ? maxWidth : minWidth
-        //  BoxText height
-        const boxHeight = size + 20 // Add padding
-
-        var boxX
-        if (textAlign === 'start') {
-            boxX = gElCanvas.width- boxWidth
-            console.log('here:', 'here')
-        } else if (textAlign === 'end') {
-            boxX = 0
-        } else {
-            boxX = gElCanvas.width / 2 - boxWidth / 2 - 5
-        }
-
-
-        gCtx.strokeStyle = fontColor
-        gCtx.lineWidth = 2
-        gCtx.strokeRect(boxX, y - size - 5, boxWidth, boxHeight)
-
+    if (isStrokeText) {
+        gCtx.strokeText(text, x, y)
+    } else {
+        gCtx.fillText(text, x, y)
     }
 
-    img.src = (!meme.isImgInput) ?'img/' + meme.selectedImgId + '.jpg':meme.imgSrc
-    // Adjust the canvas to the new image size
-    gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
+    return 
+}
+
+function CalcTextWidth(text) {
+     // Calculate text width
+     const metrics = gCtx.measureText(text)
+     return metrics.width 
+}
+
+function drawTxtBox(textWidth,x,y){
+    const meme = getMeme()
+    if (!meme || meme.length === 0) return
+
+    const textHeight = meme.lines[meme.selectedLineIdx].size
+    const textAlign = meme.lines[meme.selectedLineIdx].textAlign
+    const fontColor = meme.lines[meme.selectedLineIdx].fontColor
+
+    const maxWidth = gElCanvas.width
+    const minWidth = gElCanvas.width * 0.6
+    //  BoxText Width
+    var boxWidth = (textWidth + 20 > minWidth) ? maxWidth : minWidth
+    //  BoxText height
+    const boxHeight = textHeight + 20 // Add padding
+
+    var boxX
+    if (textAlign === 'start') {
+        boxX = gElCanvas.width- boxWidth
+        console.log('here:', 'here')
+    } else if (textAlign === 'end') {
+        boxX = 0
+    } else {
+        boxX = gElCanvas.width / 2 - boxWidth / 2 - 5
+    }
+
+
+    gCtx.strokeStyle = fontColor
+    gCtx.lineWidth = 2
+    gCtx.strokeRect(boxX, y - textHeight - 5, boxWidth, boxHeight)
+
 }
 
 

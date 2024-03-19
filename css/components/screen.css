@@ -11,7 +11,7 @@
 }
 
 body.menu-open .main-screen {
-  opacity: 1;
-  pointer-events: auto;
+  opacity: 0.6;
+  pointer-events: all;
    
 }

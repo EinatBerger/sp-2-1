@@ -1,32 +1,23 @@
-.editor-container {
-    border: 1px solid var(--primary--2);
-    background-color: var(--primary--1);
-    border-collapse: collapse;
-    min-height: 100vh;
-   
-  
-    
+
+.editor-main{
+display: flex;
+background-color: var(--primary--2);
+height: 100vh;
 }
 
-.editor-container .canvas-container {
-    align-self: stretch;
-    object-fit: cover;
-}
-
-.canvas-container {
-    display: block;
-    background-color: var(--primary--2);
+canvas{
     height: fit-content;
     width: fit-content;
-    border: 1px solid lightgray;
-    margin: 0 auto;
+    border: 2px solid var(--primary-1);
+    border-radius: 12px;
+    margin: 0.8em 2em 0.8em 2em;
+
 }
+
 .meme-editor {
     text-align: center;
 } 
 .meme-editor>* {
-    /* margin: 0.8em auto 0.8em; */
-    display: inline-block; 
     margin: 0.8em auto 0.8em;
     padding: 10px;
     border: 2px solid var(--primary-1);
@@ -68,3 +59,4 @@
     height: 26px;
     padding: 5px;
 }
+
