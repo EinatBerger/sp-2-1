@@ -5,7 +5,9 @@
         margin-top: 100px;
         position: fixed;
         top: 0;
-        right: 0;
+        /* right: 0; */
+        /* left: 0; */
+        width: 100%;
         height: 100dvh;
         background-color: rgb(255 255 255 / 90%);
         border-inline-start: 1px solid #ccc;
@@ -29,6 +31,12 @@
 
     .main-nav ul>li {
         background-color: var(--primary-base);
+        display: flex;
+        justify-content: center;
+
+    }
+    .nav-btn {
+        width: 50%;
     }
     
     .search-keywords-list{
