@@ -37,7 +37,7 @@ function filterImgs(keyword) {
 
 function _createImgs() {
     gImgs = loadFromStorage(STORAGE_IMG_KEY)
-    console.log('gImgs:',gImgs )
+    // console.log('gImgs:',gImgs )
     if (!gImgs || gImgs.length === 0) {
         
         gImgs = [
@@ -70,7 +70,7 @@ function _createImgs() {
 
     _saveImgs()
     }
-    console.log('gImgs:',gImgs )
+    // console.log('gImgs:',gImgs )
 
 }
 

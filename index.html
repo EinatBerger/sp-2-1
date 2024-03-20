@@ -48,40 +48,40 @@
     </section>
     <section class="editor-container">
         <div class="editor-main">
-            <canvas width="450" height="450"></canvas>
+            <canvas width="500" height="500"></canvas>
             <section class="meme-editor">
                 <div class="text-line">
-                    <input class="text-input" type="text" placeholder="Add Text Here" oninput="OnSetLineTxt(0,this)">
+                    <input class="text-input" type="text" placeholder="Add Text Here" oninput="OnSetLineTxt('txt',this.value)">
                     <div class="text-line-buttons">
                         <button class="btn up"><img class="icons" src="icons/up.png"></button>
                         <button class="btn down"><img class="icons" src="icons/down.png"></button>
                         <button class="btn switch"><img class="icons" src="icons/switch.png"></button>
-                        <button class="btn add"><img class="icons" src="icons/add.png"></button>
-                        <button class="btn delete"><img class="icons" src="icons/trash.png"></button>
+                        <button class="btn add" onclick="OnAddLine()"><img class="icons" src="icons/add.png"></button>
+                        <button class="btn delete" onclick="OnRemoveLine()"><img class="icons" src="icons/trash.png"></button>
                     </div>
                 </div>
                 <div class="fonts-buttons">
-                    <button class="btn decrease-font" value="-2" onclick="OnSetLineTxtSize(this.value)"><img
+                    <button class="btn decrease-font" value="-2" onclick="OnSetLineTxt('size',this.value)"><img
                             class="icons" src="icons/decreaseFont.png"></button>
-                    <button class="btn increase-font" value="+2" onclick="OnSetLineTxtSize(this.value)"><img
+                    <button class="btn increase-font" value="+2" onclick="OnSetLineTxt('size',this.value)"><img
                             class="icons" src="icons/increaseFont.png"></button>
-                    <button class="btn align-to-end" value="end" onclick="OnSetLineTxtAlignment(this.value)"><img
+                    <button class="btn align-to-end" value="end" onclick="OnSetLineTxt('textAlign',this.value)"><img
                             class="icons" src="icons/alignEnd.png"></button>
-                    <button class="btn align-to-center" value="center" onclick="OnSetLineTxtAlignment(this.value)"><img
+                    <button class="btn align-to-center" value="center" onclick="OnSetLineTxt('textAlign',this.value)"><img
                             class="icons" src="icons/alignCenter.png"></button>
-                    <button class="btn align-to-start" value="start" onclick="OnSetLineTxtAlignment(this.value)"><img
+                    <button class="btn align-to-start" value="start" onclick="OnSetLineTxt('textAlign',this.value)"><img
                             class="icons" src="icons/alignStart.png"></button>
-                    <select class="font-family" onchange="OnSetLineTxtFont(this.value)">
+                    <select class="font-family" onchange="OnSetLineTxt('font',this.value)">
                         <option value="'Times New Roman'">Times New Roman</option>
                         <option value="Arial, Helvetica">Arial</option>
                         <option value="'Courier New'">Courier New</option>
                         <option value="'Comic Sans MS'">Comic Sans MS</option>
                     </select>
-                    <button class="btn-stroke" onclick="OnSetLineTxtStrokeText()"><img class="icons"
+                    <button class="btn-stroke" onclick="OnSetLineTxt('isStrokeText',0)"><img class="icons"
                             src="icons/stroke.png"></button>
                     <button class="btn-font-color">
                         <img class="icons" src="icons/fontColor.png">
-                        <input class="font-color" type="color" value="#0000FF" onchange="OnSetLineTxtColor(this.value)">
+                        <input class="font-color" type="color" value="#0000FF" onchange="OnSetLineTxt('fontColor',this.value)">
                     </button>
                 </div>
                 <div class="emoji-container">

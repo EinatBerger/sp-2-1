@@ -13,20 +13,16 @@ function renderGallery() {
     const elGallery = document.querySelector('.gallery')
     elGallery.classList.remove('hide')
 
-
-    
     var imgs = getImgs(gFilterBy)
-
-    var strHTMLs =`<label for="image" class="file-label">Upload Your Own Image File</label>
+    var strHTMLs = `<label for="image" class="file-label">Upload Your Own Image File</label>
     <input type="file" class="file-input" id="image" name="image" onchange="onImgInput(event)">`
-   
-    strHTMLs +=imgs.map(img =>
+
+    strHTMLs += imgs.map(img =>
         `<img src="${img.url}" alt="Image ${img.id}" id="${img.id}" onclick="onImgSelect(+'${img.id}')">`
     ).join('')
 
-    
     const elImgContainer = document.querySelector('.gallery-imgs-grid-container')
-    elImgContainer.innerHTML= strHTMLs
+    elImgContainer.innerHTML = strHTMLs
 
     renderKeyword()
 }
@@ -50,15 +46,14 @@ function onImgSelect(imgId) {
 }
 
 function onImgInput(ev) {
-
     const reader = new FileReader()
-
     reader.onload = ev => {
-        let img = new Image() 
-        img.src = ev.target.result 
-        img.onload = function () { 
+        let img = new Image()
+        img.src = ev.target.result
+        img.onload = function () {
             setImgFromInput(img.src)
-            renderMeme()}
+            renderMeme()
+        }
     }
     reader.readAsDataURL(ev.target.files[0])
 }
@@ -79,26 +74,25 @@ function renderKeyword() {
 
     var strHTMLs2 = keywords.map(keyword =>
         `<button onclick="onSetFilterBy('${keyword}')">${keyword}</button>`
-        ).join('')
+    ).join('')
 
-   if (!gIsAllKeywords) {
-    strHTMLs2 += `<button style="color:red;" onclick="onAllKeyword()">more..</button>`
+    if (!gIsAllKeywords) {
+        strHTMLs2 += `<button style="color:red;" onclick="onAllKeyword()">more..</button>`
     }
     else {
-    strHTMLs2 += `<button style="color:red;" onclick="onAllKeyword()">close</button>`
+        strHTMLs2 += `<button style="color:red;" onclick="onAllKeyword()">close</button>`
     }
     const elKeywordsContainer = document.querySelector('.keywords-container')
     elKeywordsContainer.innerHTML = strHTMLs2
-    console.log('gKeywordSearchCountMap:',gKeywordSearchCountMap )
+
 }
 
-function onAllKeyword(){
+function onAllKeyword() {
     gIsAllKeywords = !gIsAllKeywords
-    console.log('gIsAllKeywords:',gIsAllKeywords )
     renderKeyword()
 }
 
-function onClearFilter(){
+function onClearFilter() {
     document.querySelector('.search-list').value = ""
     gFilterBy = ""
     renderGallery()

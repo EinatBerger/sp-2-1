@@ -1,88 +1,172 @@
 'use strict'
 const STORAGE_KEY = 'memeDB'
+
 var gMeme = {
-    isImgInput:false,
-    imgSrc:"",
+    isImgInput: false,
+    imgSrc: "",
     selectedImgId: 0,
     selectedLineIdx: 0,
-    lines: [{
+    lines: []
+}
+var gTxtBoxDimensions = {
+    boxPos: {
+        x: 0,
+        y: 0,
+    },
+    textWidth: 0,
+    textHeight: 0,
+}
+
+//creat
+function setImg(imgId) { ////Start a new Meme:
+    gMeme.isImgInput = false
+    gMeme.selectedImgId = imgId
+    createTextLine()
+    return gMeme
+}
+
+function setImgFromInput(imgSrc) { ////also Start a new Meme:
+    gMeme.isImgInput = true
+    gMeme.imgSrc = imgSrc
+    createTextLine()
+    return gMeme
+}
+
+function createTextLine() {
+    let pos
+    gMeme.selectedLineIdx = (gMeme.lines.length === 0) ? 0 : gMeme.selectedLineIdx++
+
+    // if (gMeme.selectedLineIdx === 0) {
+    //     pos = { x: gElCanvas.width / 2, y: gHeightForCalc * 0.2 }
+    // } else if (gMeme.selectedLineIdx === 1) {
+    //     pos = { x: gElCanvas.width / 2, y: gHeightForCalc * 0.8 }
+    // } else {
+    //     pos = { x: gElCanvas.width / 2, y: gHeightForCalc / 2 }
+    // }
+
+    if (gMeme.selectedLineIdx === 0) {
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.2 }
+    } else if (gMeme.selectedLineIdx === 1) {
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+    } else {
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+    }
+    var newTextLine = {
+        pos: pos,
         txt: 'Your text will be Added Here',
         font: "Arial",
         size: 20,
-        textAlign: "center",//ctx.textAlign
-        isStrokeText: false,//if true ctx.strokeText else ctx.fillText
-        fontColor:"white"// gCtx.fillStyle
-    }]
+        textAlign: "center",
+        isStrokeText: false,
+        fontColor: "blue",
+        isDrag: false,
+    }
+
+    gMeme.lines.push(newTextLine)
 }
 
-// var gMemes ={
-//     id: "",
-//     meme: { 
-//         selectedImgId:0 ,
-//         selectedLineIdx:0 ,
-//         lines: [ { txt:"", size:0, color:""} ] }
-// }
-///////////////////////////
-// Meme functions
+//get
 function getMeme() {
-    console.log('gMeme:', gMeme)
     return gMeme
 }
 
-function setImg(imgId) {
-    gMeme.isImgInput=false
-    gMeme.selectedImgId = imgId
-
-    console.log('gMeme:', gMeme)
-    return gMeme
+function getTextLine(lineIdx = gMeme.selectedLineIdx) {
+    return gMeme.lines[lineIdx]
 }
 
-function setImgFromInput(imgSrc) { 
-    gMeme.isImgInput=true
-    gMeme.imgSrc = imgSrc
-    
-    console.log('gMeme:', gMeme)
-    return gMeme
+function getTxtBoxDimensions() {
+    return gTxtBoxDimensions
 }
 
-function setLineTxt(newText) {
-    gMeme.lines[0].txt = newText
-    console.log('gMeme:', gMeme)
-    return gMeme
+//update
+function setLineTxt(key, value) {
+    if (key === "isStrokeText") {
+        value = !gMeme.lines[gMeme.selectedLineIdx].isStrokeText // Toggle isStrokeText
+    }
+    if (key === "size") {
+        const newSize = gMeme.lines[gMeme.selectedLineIdx].size + value * 1
+        value = (newSize >= 0) ? newSize : gMeme.lines[gMeme.selectedLineIdx].size
+    }
+    gMeme.lines[gMeme.selectedLineIdx][key] = value
 }
 
-function setLineTxtAlignment(textAlign) {
-    gMeme.lines[0].textAlign = textAlign
-    console.log('gMeme:', gMeme)
-    return gMeme
+function setSelectedLine(clickedPos) {
+    const lines = getMeme().lines
+
+    for (let i = 0; i < lines.length; i++) {
+        if (isTextLineClicked(clickedPos, lines[i])) {
+            gMeme.selectedLineIdx = i
+            return
+        }
+    }
 }
 
-function setLineTxtStrokeText() {
-    const isStrokeText = !gMeme.lines[gMeme.selectedLineIdx].isStrokeText // Toggle isStrokeText
-    gMeme.lines[0].isStrokeText = isStrokeText
-    console.log('gMeme:', gMeme)
-    return gMeme
+//remove 
+function removeTxtLine() {
+    if (gMeme.lines.length === 1) {
+        // If there's only one line, empty the lines array
+        gMeme.lines = []
+        gMeme.selectedLineIdx = 0
+    } else {
+        // If there are multiple lines, remove the line at the specified index
+        gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+        gMeme.selectedLineIdx = 0
+    }
 }
 
-function setLineTxtSize(diff) {
-    const newSize = gMeme.lines[0].size + diff*1
-    console.log('newSize:',newSize )
-    gMeme.lines[0].size = (newSize >= 0) ? newSize : gMeme.lines[0].size // Fixed syntax error
-    console.log('gMeme:', gMeme)
-    return gMeme
+
+
+function CalcTxtBoxDimensions(lineIdx = gMeme.selectedLineIdx) {
+    const { pos, txt, size, font } = getTextLine(lineIdx)
+
+    // Set font style for measuring text width
+    gCtx.font = size + 'px ' + font // You can adjust the font and size as needed
+
+    // Measure text width and height
+    const textMetrics = gCtx.measureText(txt)
+    const textWidth = textMetrics.width
+    const textHeight = size
+
+    // Calculate coordinates for the text box
+    const x = pos.x - textWidth / 2
+    const y = pos.y - textMetrics.actualBoundingBoxAscent
+
+    // Update gTxtBoxDimensions object with calculated values
+    gTxtBoxDimensions = {
+        boxPos: { x, y },
+        textWidth,
+        textHeight,
+    }
 }
 
-function setLineTxtFont(font) {
-    gMeme.lines[0].font = font
-    console.log('gMeme:', gMeme)
-    return gMeme
+//Check if the click is inside the TextLine
+function isTextLineClicked(clickedPos, lineIdx = gMeme.selectedLineIdx) {
+    CalcTxtBoxDimensions(lineIdx)
+    const { boxPos, textWidth, textHeight } = getTxtBoxDimensions(lineIdx)
+
+    // Check if the clicked position is within the text box boundaries
+    if (
+        clickedPos.x >= boxPos.x &&
+        clickedPos.x <= boxPos.x + textWidth &&
+        clickedPos.y >= boxPos.y &&
+        clickedPos.y <= boxPos.y + textHeight
+    ) {
+        return true // Clicked within the text box
+    } else {
+        return false // Clicked outside the text box
+    }
 }
 
-function setLineTxtColor(fontColor) {
-    gMeme.lines[0].fontColor = fontColor
-    console.log('gMeme:', gMeme)
-    return gMeme
+function setTextLineDrag(isDrag) {
+    gMeme.lines[gMeme.selectedLineIdx].isDrag = isDrag
 }
+
+// Move the TextLine by a delta from the pervious pos
+function moveTextLine(dx, dy) {
+    gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
+    gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
+}
+
 
 ///////////////////////////
 function loadSavedMemes() {
@@ -95,7 +179,7 @@ function getSavedMeme(memeId) {
 }
 
 function addMeme(meme) {
-    const newMeme = _createMeme(meme)
+    const newMeme = _createSavedMeme(meme)
     gMemes.push(newMeme)
 
     _saveMemes()
@@ -111,7 +195,7 @@ function removeSavedMeme(MemeId) {
 
 // Private functions
 
-function _createMeme(meme) {
+function _createSavedMeme(meme) {
     return {
         id: makeId(),
         meme: meme

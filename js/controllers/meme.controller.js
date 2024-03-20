@@ -1,4 +1,5 @@
 'use strict'
+let gHeightForCalc
 
 function renderMeme() {
     const meme = getMeme()
@@ -9,18 +10,14 @@ function renderMeme() {
     img.onload = function () {
         // Draw the img on the canvas
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-        
-        const x = gElCanvas.width / 2
-        const y = gElCanvas.height * 0.2
-        // Draw text
-        drawText(x,y)
-        const text = meme.lines[meme.selectedLineIdx].txt   
-        const textWidth = CalcTextWidth(text)
-        // Draw textBox (rect)
-        drawTxtBox(textWidth,x,y)
+
+        gHeightForCalc = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
+        meme.lines.forEach(line => {
+            renderTextLine(line)
+        })
     }
 
-    img.src = (!meme.isImgInput) ?'img/' + meme.selectedImgId + '.jpg':meme.imgSrc
+    img.src = (!meme.isImgInput) ? 'img/' + meme.selectedImgId + '.jpg' : meme.imgSrc
     // Adjust the canvas to the new image size
     gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
 
@@ -28,110 +25,54 @@ function renderMeme() {
     elEditor.classList.remove('hide')
     const elGallery = document.querySelector('.gallery')
     elGallery.classList.add('hide')
-
 }
 
-function drawText(x,y) {
-    const meme = getMeme()
-    if (!meme || meme.length === 0) return
+function renderTextLine() {
+    drawTextLine()
+    drawTextBox()
+}
 
-    // Draw text
-    const text = meme.lines[meme.selectedLineIdx].txt   
-    const size = meme.lines[meme.selectedLineIdx].size
-    const font = meme.lines[meme.selectedLineIdx].font
-    const textAlign = meme.lines[meme.selectedLineIdx].textAlign
-    const fontColor = meme.lines[meme.selectedLineIdx].fontColor
-    const isStrokeText = meme.lines[meme.selectedLineIdx].isStrokeText
+function OnSetLineTxt(key, value) {
+    setLineTxt(key, value)
+    renderMeme()
+}
 
+function OnAddLine() {
+    createTextLine()
+    renderMeme()
+}
+
+function OnRemoveLine() {
+    removeTextLine()
+    renderMeme()
+}
+
+function drawTextLine() {
+    console.log('gMeme:', gMeme)
+
+    const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine()
     gCtx.font = size + 'px ' + font
     gCtx.textAlign = textAlign
     gCtx.fillStyle = fontColor
     gCtx.strokeStyle = fontColor
 
     if (isStrokeText) {
-        gCtx.strokeText(text, x, y)
+        gCtx.strokeText(txt, pos.x, pos.y)
     } else {
-        gCtx.fillText(text, x, y)
+        gCtx.fillText(txt, pos.x, pos.y)
     }
 
-    return 
 }
 
-function CalcTextWidth(text) {
-     // Calculate text width
-     const metrics = gCtx.measureText(text)
-     return metrics.width 
+function drawTextBox() {
+    CalcTxtBoxDimensions()
+    const { boxPos, textWidth, textHeight } = getTxtBoxDimensions()
+
+    // Draw the text box
+    gCtx.strokeStyle = 'black' // Set the stroke color
+    gCtx.lineWidth = 2 // Set the line width
+    gCtx.strokeRect(boxPos.x - 2, boxPos.y - 4, textWidth + 4, textHeight + 4) // Draw the rectangle the num are padding
 }
-
-function drawTxtBox(textWidth,x,y){
-    const meme = getMeme()
-    if (!meme || meme.length === 0) return
-
-    const textHeight = meme.lines[meme.selectedLineIdx].size
-    const textAlign = meme.lines[meme.selectedLineIdx].textAlign
-    const fontColor = meme.lines[meme.selectedLineIdx].fontColor
-
-    const maxWidth = gElCanvas.width
-    const minWidth = gElCanvas.width * 0.6
-    //  BoxText Width
-    var boxWidth = (textWidth + 20 > minWidth) ? maxWidth : minWidth
-    //  BoxText height
-    const boxHeight = textHeight + 20 // Add padding
-
-    var boxX
-    if (textAlign === 'start') {
-        boxX = gElCanvas.width- boxWidth
-        console.log('here:', 'here')
-    } else if (textAlign === 'end') {
-        boxX = 0
-    } else {
-        boxX = gElCanvas.width / 2 - boxWidth / 2 - 5
-    }
-
-
-    gCtx.strokeStyle = fontColor
-    gCtx.lineWidth = 2
-    gCtx.strokeRect(boxX, y - textHeight - 5, boxWidth, boxHeight)
-
-}
-
-
-
-function OnSetLineTxt() {
-    const newText = document.querySelector('.text-input').value
-    setLineTxt(newText)
-    renderMeme()
-}
-
-function OnSetLineTxtAlignment(textAlign) {
-    console.log('textAlign:', textAlign)
-    setLineTxtAlignment(textAlign)
-    renderMeme()
-}
-
-function OnSetLineTxtStrokeText() {
-    setLineTxtStrokeText()
-    renderMeme()
-}
-
-function OnSetLineTxtSize(diff) {
-    console.log('diff:', diff)
-    setLineTxtSize(diff)
-    renderMeme()
-}
-
-function OnSetLineTxtFont(font) {
-    console.log('font:', font)
-    setLineTxtFont(font)
-    renderMeme()
-}
-
-function OnSetLineTxtColor(fillStyle) {
-    console.log('fillStyle:', fillStyle)
-    setLineTxtColor(fillStyle)
-    renderMeme()
-}
-
 
 ///////////////////////////////////////////////////////
 /*load saved memes from local storage*/
