@@ -46,7 +46,7 @@ function createTextLine() {
 
     var newTextLine = {
         pos: pos,
-        txt: 'Your text will be Added Here',
+        txt: 'Add Text Here',
         font: "Arial",
         size: 20,
         textAlign: "center",
@@ -114,7 +114,7 @@ function setSelectedLine(clickedPos) {
 }
 
 //remove 
-function removeTxtLine() {
+function removeTextLine() {
     if (gMeme.lines.length === 1) {
         // If there's only one line, empty the lines array
         gMeme.lines = []

@@ -18,12 +18,14 @@ function renderMeme() {
 
         gHeightForCalc = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
         renderTextLines()
+        
     }
 
     img.src = (!meme.isImgInput) ? 'img/' + meme.selectedImgId + '.jpg' : meme.imgSrc
     // Adjust the canvas to the new image size
     gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
 
+    document.querySelector('.text-input').value =meme.lines[gMeme.selectedLineIdx].txt
     const elEditor = document.querySelector('.editor-container')
     elEditor.classList.remove('hide')
     const elGallery = document.querySelector('.gallery')
