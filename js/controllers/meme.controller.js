@@ -68,7 +68,6 @@ function OnRemoveLine() {
 }
 
 function drawTextLine(lineIdx) {
-    console.log('gMeme:', gMeme)
 
     const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine(lineIdx)
     gCtx.font = size + 'px ' + font
@@ -88,7 +87,7 @@ function drawTextBox(lineIdx) {
     CalcTxtBoxDimensions(lineIdx)
     const line = getTextLine(lineIdx)
     const { boxPos, textWidth, textHeight } = line.txtBoxDimensions
-    console.log(boxPos, textWidth, textHeight )
+    
     // Draw the text box
     gCtx.strokeStyle = 'black' // Set the stroke color
     gCtx.lineWidth = 2 // Set the line width

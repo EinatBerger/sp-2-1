@@ -84,12 +84,26 @@ function setLineTxt(key, value) {
     gMeme.lines[gMeme.selectedLineIdx][key] = value
 }
 
-function switchLine() {
-    if (gMeme.lines.length === 0 ||
-        gMeme.lines.length- 1 === gMeme.selectedLineIdx) {
-        gMeme.selectedLineIdx = 0
-    } else { gMeme.selectedLineIdx++ }
-    return
+function switchLine(dir) {
+    if (gMeme.lines.length === 0) return
+    // copy and sort by pos.y
+    const linesWithPosY = gMeme.lines.map((line, idx) => ({ idx, posY: line.pos.y }))
+    linesWithPosY.sort((a, b) => a.posY - b.posY)
+
+    //current
+    const currentLineIdx = gMeme.selectedLineIdx
+
+    //go to next by dir
+    //because first line is up switch will go with down
+    let nextLineIdx
+    if (dir === 'up') {
+        nextLineIdx = currentLineIdx === 0 ? gMeme.lines.length - 1 : currentLineIdx - 1
+    } else {
+        nextLineIdx = currentLineIdx === gMeme.lines.length - 1 ? 0 : currentLineIdx + 1
+    }
+
+    //update selectedLineIdx
+    gMeme.selectedLineIdx = linesWithPosY[nextLineIdx].idx
 }
 
 function setSelectedLine(clickedPos) {
@@ -137,7 +151,7 @@ function CalcTxtBoxDimensions(lineIdx) {
         textWidth,
         textHeight,
     }
-    console.log('gMeme:', gMeme)
+    // console.log('gMeme:', gMeme)
 }
 
 //Check if the click is inside the TextLine
