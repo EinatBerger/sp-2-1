@@ -84,6 +84,14 @@ function setLineTxt(key, value) {
     gMeme.lines[gMeme.selectedLineIdx][key] = value
 }
 
+function switchLine() {
+    if (gMeme.lines.length === 0 ||
+        gMeme.lines.length- 1 === gMeme.selectedLineIdx) {
+        gMeme.selectedLineIdx = 0
+    } else { gMeme.selectedLineIdx++ }
+    return
+}
+
 function setSelectedLine(clickedPos) {
     const lines = getMeme().lines
 

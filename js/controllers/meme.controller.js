@@ -9,7 +9,7 @@ function renderMeme() {
     if (!meme || meme.length === 0) return
 
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height) 
-    
+
     // Draw the img on the canvas
     const img = new Image()
     img.onload = function () {
@@ -54,6 +54,10 @@ function OnSetLineTxt(key, value) {
 
 function OnAddLine() {
     createTextLine()
+    renderMeme()
+}
+function OnSwitchLine() {
+    switchLine()
     renderMeme()
 }
 
