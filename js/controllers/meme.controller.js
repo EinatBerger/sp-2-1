@@ -47,7 +47,6 @@ function renderTextLine(lineIdx) {
 }
 
 function OnSetLineTxt(key, value) {
-    setSelectedLine(clickedPos)
     setLineTxt(key, value)
     renderMeme()
 }
@@ -62,7 +61,6 @@ function OnSwitchLine() {
 }
 
 function OnRemoveLine() {
-    setSelectedLine(clickedPos)
     removeTextLine()
     renderMeme()
 }

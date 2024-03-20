@@ -10,6 +10,7 @@ var gMeme = {
     lines: []
 }
 
+
 //creat
 function setImg(imgId) { ////Start a new Meme:
     gMeme.isImgInput = false
@@ -36,18 +37,13 @@ function createTextLine() {
     if (gMeme.selectedLineIdx === 0) {
         pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.1 }
     } else if (gMeme.selectedLineIdx === 1) {
-        pos = { x: gElCanvas.width / 2, y: gHeightForCalc * 0.8 }
-    } else {
-        pos = { x: gElCanvas.width / 2, y: gHeightForCalc / 2 }
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.9 }
+    } else if (gMeme.selectedLineIdx === 2) {
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height/ 2 }
+    } else {//randomly between 20% and 80% of canvas height
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height * (Math.random() * 0.6 + 0.2) }
     }
 
-    // if (gMeme.selectedLineIdx === 0) {
-    //     pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.2 }
-    // } else if (gMeme.selectedLineIdx === 1) {
-    //     pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
-    // } else {
-    //     pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
-    // }
     var newTextLine = {
         pos: pos,
         txt: 'Your text will be Added Here',
