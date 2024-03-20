@@ -2,19 +2,12 @@
 const STORAGE_KEY = 'memeDB'
 
 var gMeme = {
+    id: 0,
     isImgInput: false,
     imgSrc: "",
     selectedImgId: 0,
     selectedLineIdx: 0,
     lines: []
-}
-var gTxtBoxDimensions = {
-    boxPos: {
-        x: 0,
-        y: 0,
-    },
-    textWidth: 0,
-    textHeight: 0,
 }
 
 //creat
@@ -34,23 +27,27 @@ function setImgFromInput(imgSrc) { ////also Start a new Meme:
 
 function createTextLine() {
     let pos
-    gMeme.selectedLineIdx = (gMeme.lines.length === 0) ? 0 : gMeme.selectedLineIdx++
-
-    // if (gMeme.selectedLineIdx === 0) {
-    //     pos = { x: gElCanvas.width / 2, y: gHeightForCalc * 0.2 }
-    // } else if (gMeme.selectedLineIdx === 1) {
-    //     pos = { x: gElCanvas.width / 2, y: gHeightForCalc * 0.8 }
-    // } else {
-    //     pos = { x: gElCanvas.width / 2, y: gHeightForCalc / 2 }
-    // }
+    if (gMeme.lines.length === 0) {
+        gMeme.selectedLineIdx = 0
+    } else {
+        gMeme.selectedLineIdx++
+    }
 
     if (gMeme.selectedLineIdx === 0) {
-        pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.2 }
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.1 }
     } else if (gMeme.selectedLineIdx === 1) {
-        pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+        pos = { x: gElCanvas.width / 2, y: gHeightForCalc * 0.8 }
     } else {
-        pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+        pos = { x: gElCanvas.width / 2, y: gHeightForCalc / 2 }
     }
+
+    // if (gMeme.selectedLineIdx === 0) {
+    //     pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.2 }
+    // } else if (gMeme.selectedLineIdx === 1) {
+    //     pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+    // } else {
+    //     pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+    // }
     var newTextLine = {
         pos: pos,
         txt: 'Your text will be Added Here',
@@ -60,6 +57,7 @@ function createTextLine() {
         isStrokeText: false,
         fontColor: "blue",
         isDrag: false,
+        txtBoxDimensions: {},
     }
 
     gMeme.lines.push(newTextLine)
@@ -70,12 +68,8 @@ function getMeme() {
     return gMeme
 }
 
-function getTextLine(lineIdx = gMeme.selectedLineIdx) {
+function getTextLine(lineIdx) {
     return gMeme.lines[lineIdx]
-}
-
-function getTxtBoxDimensions() {
-    return gTxtBoxDimensions
 }
 
 //update
@@ -114,9 +108,7 @@ function removeTxtLine() {
     }
 }
 
-
-
-function CalcTxtBoxDimensions(lineIdx = gMeme.selectedLineIdx) {
+function CalcTxtBoxDimensions(lineIdx) {
     const { pos, txt, size, font } = getTextLine(lineIdx)
 
     // Set font style for measuring text width
@@ -132,18 +124,19 @@ function CalcTxtBoxDimensions(lineIdx = gMeme.selectedLineIdx) {
     const y = pos.y - textMetrics.actualBoundingBoxAscent
 
     // Update gTxtBoxDimensions object with calculated values
-    gTxtBoxDimensions = {
+    gMeme.lines[lineIdx].txtBoxDimensions = {
         boxPos: { x, y },
         textWidth,
         textHeight,
     }
+    console.log('gMeme:', gMeme)
 }
 
 //Check if the click is inside the TextLine
-function isTextLineClicked(clickedPos, lineIdx = gMeme.selectedLineIdx) {
+function isTextLineClicked(clickedPos, lineIdx) {
     CalcTxtBoxDimensions(lineIdx)
-    const { boxPos, textWidth, textHeight } = getTxtBoxDimensions(lineIdx)
-
+    // const { boxPos, textWidth, textHeight } = getTxtBoxDimensions(lineIdx)
+    const { boxPos, textWidth, textHeight } = getTextLine(lineIdx)
     // Check if the clicked position is within the text box boundaries
     if (
         clickedPos.x >= boxPos.x &&

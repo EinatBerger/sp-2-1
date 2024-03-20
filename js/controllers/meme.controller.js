@@ -1,10 +1,15 @@
 'use strict'
 let gHeightForCalc
 
+
+// Render the initial image and text  
+//will be use when the user select/random or upload an img 
 function renderMeme() {
     const meme = getMeme()
     if (!meme || meme.length === 0) return
 
+    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height) 
+    
     // Draw the img on the canvas
     const img = new Image()
     img.onload = function () {
@@ -12,9 +17,7 @@ function renderMeme() {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
 
         gHeightForCalc = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
-        meme.lines.forEach(line => {
-            renderTextLine(line)
-        })
+        renderTextLines()
     }
 
     img.src = (!meme.isImgInput) ? 'img/' + meme.selectedImgId + '.jpg' : meme.imgSrc
@@ -27,12 +30,24 @@ function renderMeme() {
     elGallery.classList.add('hide')
 }
 
-function renderTextLine() {
-    drawTextLine()
-    drawTextBox()
+function renderTextLines() {
+    const meme = getMeme()
+    meme.lines.forEach((line, idx) => { 
+        renderTextLine(idx) 
+    })
+}
+
+function renderTextLine(lineIdx) {
+    const meme = getMeme()
+    drawTextLine(lineIdx)
+
+    if (lineIdx===meme.selectedLineIdx) {
+        drawTextBox(lineIdx)
+    }
 }
 
 function OnSetLineTxt(key, value) {
+    setSelectedLine(clickedPos)
     setLineTxt(key, value)
     renderMeme()
 }
@@ -43,14 +58,15 @@ function OnAddLine() {
 }
 
 function OnRemoveLine() {
+    setSelectedLine(clickedPos)
     removeTextLine()
     renderMeme()
 }
 
-function drawTextLine() {
+function drawTextLine(lineIdx) {
     console.log('gMeme:', gMeme)
 
-    const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine()
+    const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine(lineIdx)
     gCtx.font = size + 'px ' + font
     gCtx.textAlign = textAlign
     gCtx.fillStyle = fontColor
@@ -64,10 +80,11 @@ function drawTextLine() {
 
 }
 
-function drawTextBox() {
-    CalcTxtBoxDimensions()
-    const { boxPos, textWidth, textHeight } = getTxtBoxDimensions()
-
+function drawTextBox(lineIdx) {
+    CalcTxtBoxDimensions(lineIdx)
+    const line = getTextLine(lineIdx)
+    const { boxPos, textWidth, textHeight } = line.txtBoxDimensions
+    console.log(boxPos, textWidth, textHeight )
     // Draw the text box
     gCtx.strokeStyle = 'black' // Set the stroke color
     gCtx.lineWidth = 2 // Set the line width
