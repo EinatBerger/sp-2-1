@@ -1,31 +1,26 @@
 'use strict'
-let gHeightForCalc
-
-
 // Render the initial image and text  
 //will be use when the user select/random or upload an img 
 function renderMeme() {
     const meme = getMeme()
     if (!meme || meme.length === 0) return
 
-    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height) 
+    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
 
     // Draw the img on the canvas
     const img = new Image()
     img.onload = function () {
         // Draw the img on the canvas
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-
-        gHeightForCalc = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
         renderTextLines()
-        
+
     }
 
     img.src = (!meme.isImgInput) ? 'img/' + meme.selectedImgId + '.jpg' : meme.imgSrc
     // Adjust the canvas to the new image size
     gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
 
-    document.querySelector('.text-input').value =meme.lines[gMeme.selectedLineIdx].txt
+    document.querySelector('.text-input').value = meme.lines[meme.selectedLineIdx].txt
     const elEditor = document.querySelector('.editor-container')
     elEditor.classList.remove('hide')
     const elGallery = document.querySelector('.gallery')
@@ -34,8 +29,8 @@ function renderMeme() {
 
 function renderTextLines() {
     const meme = getMeme()
-    meme.lines.forEach((line, idx) => { 
-        renderTextLine(idx) 
+    meme.lines.forEach((line, idx) => {
+        renderTextLine(idx)
     })
 }
 
@@ -43,32 +38,11 @@ function renderTextLine(lineIdx) {
     const meme = getMeme()
     drawTextLine(lineIdx)
 
-    if (lineIdx===meme.selectedLineIdx) {
+    if (lineIdx === meme.selectedLineIdx) {
         drawTextBox(lineIdx)
     }
 }
-
-function OnSetLineTxt(key, value) {
-    setLineTxt(key, value)
-    renderMeme()
-}
-
-function OnAddLine() {
-    createTextLine()
-    renderMeme()
-}
-function OnSwitchLine() {
-    switchLine()
-    renderMeme()
-}
-
-function OnRemoveLine() {
-    removeTextLine()
-    renderMeme()
-}
-
 function drawTextLine(lineIdx) {
-
     const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine(lineIdx)
     gCtx.font = size + 'px ' + font
     gCtx.textAlign = textAlign
@@ -80,20 +54,40 @@ function drawTextLine(lineIdx) {
     } else {
         gCtx.fillText(txt, pos.x, pos.y)
     }
-
 }
 
 function drawTextBox(lineIdx) {
     CalcTxtBoxDimensions(lineIdx)
     const line = getTextLine(lineIdx)
     const { boxPos, textWidth, textHeight } = line.txtBoxDimensions
-    
+
     // Draw the text box
     gCtx.strokeStyle = 'black' // Set the stroke color
     gCtx.lineWidth = 2 // Set the line width
     gCtx.strokeRect(boxPos.x - 2, boxPos.y - 4, textWidth + 4, textHeight + 4) // Draw the rectangle the num are padding
 }
-
+/////////////////////////////////////////////
+// actions:
+///////////////////////////////////////////////////////
+function OnSetLineTxt(key, value) {
+    setLineTxt(key, value)
+    renderMeme()
+}
+///////////////////////////////////////////////////////
+function OnAddLine() {
+    createTextLine()
+    renderMeme()
+}
+///////////////////////////////////////////////////////
+function OnSwitchLine() {
+    switchLine()
+    renderMeme()
+}
+///////////////////////////////////////////////////////
+function OnRemoveLine() {
+    removeTextLine()
+    renderMeme()
+}
 ///////////////////////////////////////////////////////
 /*load saved memes from local storage*/
 function onLoad() {
@@ -110,13 +104,16 @@ function onSave() {
 }
 ///////////////////////////////////////////////////////
 /*download meme*/
+
 function onDownloadImg(elLink) {
     const imgContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
     elLink.href = imgContent
+
 }
 ////////////////////////////////////////////////////////
 /*share meme on facebook*/
 function onShareImg() {
+
     // Gets the image from the canvas
     const imgDataUrl = gElCanvas.toDataURL('image/jpeg')
 
@@ -128,6 +125,7 @@ function onShareImg() {
 
     // Send the image to the server
     doUploadImg(imgDataUrl, onSuccess)
+
 }
 
 // Upload the image to a server, get back a URL 

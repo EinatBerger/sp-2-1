@@ -7,7 +7,7 @@ var gMeme = {
     imgSrc: "",
     selectedImgId: 0,
     selectedLineIdx: 0,
-    lines: []
+    lines: [],
 }
 
 
@@ -39,7 +39,7 @@ function createTextLine() {
     } else if (gMeme.selectedLineIdx === 1) {
         pos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.9 }
     } else if (gMeme.selectedLineIdx === 2) {
-        pos = { x: gElCanvas.width / 2, y: gElCanvas.height/ 2 }
+        pos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
     } else {//randomly between 20% and 80% of canvas height
         pos = { x: gElCanvas.width / 2, y: gElCanvas.height * (Math.random() * 0.6 + 0.2) }
     }
@@ -85,21 +85,23 @@ function switchLine(dir) {
     // copy and sort by pos.y
     const linesWithPosY = gMeme.lines.map((line, idx) => ({ idx, posY: line.pos.y }))
     linesWithPosY.sort((a, b) => a.posY - b.posY)
-
+console.log('linesWithPosY:', linesWithPosY)
     //current
     const currentLineIdx = gMeme.selectedLineIdx
-
+console.log('currentLineIdx:', currentLineIdx)
     //go to next by dir
     //because first line is up switch will go with down
     let nextLineIdx
+    let currLineOrderIdx = linesWithPosY.findIndex(line => line.idx === currentLineIdx)
     if (dir === 'up') {
-        nextLineIdx = currentLineIdx === 0 ? gMeme.lines.length - 1 : currentLineIdx - 1
+        nextLineIdx = currLineOrderIdx === 0 ? gMeme.lines.length - 1 : currLineOrderIdx - 1
     } else {
-        nextLineIdx = currentLineIdx === gMeme.lines.length - 1 ? 0 : currentLineIdx + 1
+        nextLineIdx = currLineOrderIdx === gMeme.lines.length - 1 ? 0 : currLineOrderIdx + 1
     }
-
+console.log('nextLineIdx:', nextLineIdx)
     //update selectedLineIdx
     gMeme.selectedLineIdx = linesWithPosY[nextLineIdx].idx
+    console.log('gMeme.selectedLineIdx:', gMeme.selectedLineIdx)
 }
 
 function setSelectedLine(clickedPos) {
@@ -112,6 +114,7 @@ function setSelectedLine(clickedPos) {
         }
     }
 }
+
 
 //remove 
 function removeTextLine() {
