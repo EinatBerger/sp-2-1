@@ -29,15 +29,6 @@ function onInit() {
 function addListeners() {
     addMouseListeners()
     addTouchListeners()
-
-    // window.addEventListener('resize', () => {
-    //     resizeCanvas()
-
-    //     const txtPos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.2 }
-    //     createTextLine(txtPos)
-
-    //     renderMeme()
-    // })
 }
 
 function addMouseListeners() {
@@ -61,8 +52,6 @@ function onDown(ev) {
     const selectedLineIdx = setSelectedLine(gStartPos)
     if (selectedLineIdx === -1) return
     
-    // if (!isTextLineClicked(gStartPos)) return
-
     setTextLineDrag(true)
     document.body.style.cursor = 'grabbing'
 }
@@ -125,9 +114,6 @@ function getEvPos(ev) {
         }
     }
 }
-
-
-
 
 ////////////////////////////////////////////////////////////////////
 function toggleMenu() {

@@ -76,3 +76,16 @@ canvas{
     text-decoration: none; /* Remove underline from anchor links */
     color: var(--primary-1); /* Set anchor link color */
 }
+
+.modal {
+    position: absolute;
+
+    padding: 0.3em;
+    background-color: lightgray;
+    border: 1px solid gray;
+    border-radius: .3em;
+    
+    opacity: 0;
+    transition: opacity 300ms;
+
+}

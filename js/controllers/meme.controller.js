@@ -1,39 +1,6 @@
 'use strict'
 var gShouldDrawTextBox = true
 
-function renderMemes() {
-    const memes = loadSavedMemes()
-    memes.forEach((meme) => {
-        renderMeme()
-        strHTMLs += `<img src="${meme.imgSrc}" alt="Meme ${meme.id}" id="${meme.id}" onclick="onSavedMemeSelect('${meme.imgSrc}','Saved')">`
-    })
-
-    const elSavedMemeContainer = document.querySelector('.saved-memes-grid-container')
-    elSavedMemeContainer.innerHTML = strHTMLs.join('')
-
-
-    const elSavedMemes = document.querySelector('.saved-memes-grid-container')
-    elSavedMemes.classList.remove('hide')
-    const elEditor = document.querySelector('.editor-container')
-    elEditor.classList.add('hide')
-    const elGallery = document.querySelector('.gallery')
-    elGallery.classList.add('hide')
-
-}
-
-
-function onSavedMemeSelect(memeSrc) {
-    setImg(memeSrc,'saved')
-    renderMeme()
-}
-
-function loadSavedMemes() {
-    loadFromStorage(STORAGE_KEY) || []
-}
-
-
-
-
 // Render the initial image and text  
 //will be use when the user select/random or upload an img 
 function renderMeme() {
@@ -75,12 +42,33 @@ function renderTextLine(lineIdx) {
     const meme = getMeme()
     drawTextLine(lineIdx)
 
+    // if (lineIdx === meme.selectedLineIdx) {
+    //     CalcTxtBoxDimensions(lineIdx);
+    //     const line = getTextLine(lineIdx);
+    //     const { pos, txt, size, font, textAlign, fontColor } = line;
+    //     openModal(pos.x, pos.y, size, font, textAlign, fontColor, txt);
+    // }
+
+
     if (!gShouldDrawTextBox) return // dont drawTextBox 
 
     if (lineIdx === meme.selectedLineIdx) {
         drawTextBox(lineIdx)
     }
 }
+
+// function openModal(x, y, size, font, textAlign, fontColor, text) {
+//     const elModal = document.querySelector('.modal');
+//     elModal.innerText = text;
+//     elModal.style.opacity = 1;
+//     // Position the modal based on the text line coordinates
+//     elModal.style.top = y + 'px';
+//     elModal.style.left = x + 'px';
+//     // Apply styling based on text line properties
+//     elModal.style.font = size + 'px ' + font;
+//     elModal.style.textAlign = textAlign;
+//     elModal.style.color = fontColor;
+// }
 
 function drawTextLine(lineIdx) {
     const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine(lineIdx)
@@ -129,26 +117,8 @@ function OnRemoveLine() {
     renderMeme()
 }
 ///////////////////////////////////////////////////////
-/*load saved memes from local storage*/
-function onLoad() {
-    renderMemes()
-}
-///////////////////////////////////////////////////////
-/*save meme to local storge*/
-// function onSave() {
-//     gShouldDrawTextBox = false
-//     renderMeme() //without txt box    
-//     // Gets the image from the canvas
-//     const memeSrc = gElCanvas.toDataURL('image/jpeg')
-//     setMemeSrc(memeSrc)
-//     console.log('gMeme:', gMeme)
-//     addMeme(gMeme)
-//     console.log('gMemes:', gMemes)
-//     gShouldDrawTextBox = true
-//     renderMeme()//with txt box
-//     showMsg('Saved Your Meme')
-// }
 
+///////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////
 /*download meme*/
@@ -206,14 +176,3 @@ function doUploadImg(imgDataUrl, onSuccess) {
 }
 ////////////////////////////////////////////////////////////////////////
 
-function showMsg(action) {
-    console.log('msg:', 'msg')
-    const msg = `You Successfully ${action}`
-    const elMsg = document.querySelector('.user-msg')
-    elMsg.innerText = msg
-    elMsg.classList.remove('hide')
-
-    setTimeout(() => {
-        elMsg.classList.add('hide')
-    }, 3000)
-}

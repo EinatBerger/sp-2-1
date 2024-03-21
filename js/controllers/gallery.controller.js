@@ -5,7 +5,6 @@ let savedImage
 var gIsAllKeywords = false
 //self list in gallery: 
 //func: memes saved, trans, font keywords.
-//design: img gal on mobile, dont see editor, keyword container
 
 function renderGallery() {
     console.log('gMeme:', gMeme)
@@ -48,49 +47,23 @@ function onImgSelect(imgId) {
     renderMeme()
 }
 
-// function onImgInput(ev) {
-//     const reader = new FileReader()
-//     reader.onload = ev => {
-//         let img = new Image()
-//         img.src = ev.target.result
-//         img.onload = function () {
-//             setImgFromInput(img.src)
-//             renderMeme()
-//         }
-//     }
-//     reader.readAsDataURL(ev.target.files[0])
-// }
 function onImgInput(ev) {
-    const reader = new FileReader();
+    const reader = new FileReader()
 
-    reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-            setImgFromInput(img.src); // Assuming setImgFromInput is a function to set the image
-            renderMeme(); // Assuming renderMeme is a function to render the canvas
-        };
-        img.src = event.target.result;
-    };
-
-    reader.readAsDataURL(ev.target.files[0]);
+    reader.onload = ev => {
+        let img = new Image() 
+         
+        img.onload = () =>{
+            setImgFromInput(img.src)
+            console.log(gMeme)
+            renderMeme()
+        }
+        img.src = ev.target.result
+    }
+    reader.readAsDataURL(ev.target.files[0])
+    console.log('readAsDataURL(ev.target.files[0]):',reader.readAsDataURL(ev.target.files[0]) ) 
 }
 
-// function onImgInput(ev) {
-//     const reader = new FileReader();
-
-//     // Set up onload event for the reader
-//     reader.onload = function(event) {
-//         const img = new Image();
-//         img.onload = function() {
-//             setImg(img.src, 'input'); // Assuming setImg is a function to set the image
-//             renderMeme(); // Assuming renderMeme renders the canvas
-//         };
-//         img.src = event.target.result; // Set the source of the image to the loaded image data
-//     };
-
-//     // Read the uploaded file as a data URL
-//     reader.readAsDataURL(ev.target.files[0]);
-// }
 //////////////////////////////////////////////////////////////////
 
 function renderKeyword() {

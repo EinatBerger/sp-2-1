@@ -19,19 +19,6 @@ function filterImgs(keyword) {
     return imgs
 }
 
-// function getImg(imgId)  {
-//     const img = gImgs.find(img => imgId === img.id)
-//     return img
-// }
-
-// function addImg(keywords = []) {
-//     const img = _createImg(keywords)
-//     gImgs.push(img)
-
-//     _saveImgs()
-//     return img
-// }
-
 ///////////////////////////////
 // Private functions
 
@@ -70,7 +57,6 @@ function _createImgs() {
 
     _saveImgs()
     }
-    // console.log('gImgs:',gImgs )
 
 }
 

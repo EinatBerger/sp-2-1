@@ -3,7 +3,7 @@ const STORAGE_KEY = 'memeDB'
 
 var gMeme = {
     isImgInput: false,
-    imgSrc: "",
+    imgSrc: '',
     // memeSrc: "",
     // imgSrcInput: "",
     selectedImgId: 0,
@@ -38,7 +38,7 @@ function createTextLine() {
         size: 20,
         textAlign: "center",
         isStrokeText: false,
-        fontColor: "blue",
+        fontColor: "white",
         isDrag: false,
         txtBoxDimensions: {},
     }
@@ -65,6 +65,7 @@ function setImg(imgId) { ////Start a new Meme:
 }
 
 function setImgFromInput(imgSrc) { ////also Start a new Meme:
+    console.log('hi');
     gMeme.isImgInput = true
     gMeme.imgSrc = imgSrc
     createTextLine()
