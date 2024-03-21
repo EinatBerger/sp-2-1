@@ -12,6 +12,14 @@ var gMeme = {
 }
 var gMemes = []
 
+function clearGMeme() {
+    gMeme.isImgInput = false
+    gMeme.imgSrc = ''
+    gMeme.selectedImgId = 0
+    gMeme.selectedLineIdx = 0
+    gMeme.lines = []
+}
+
 // create
 function createTextLine() {
     let pos

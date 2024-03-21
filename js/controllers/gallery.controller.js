@@ -17,7 +17,7 @@ function renderGallery() {
 
     var imgs = getImgs(gFilterBy)
     var strHTMLs = `<label for="image" class="file-label">Upload Your Own Image File</label>
-    <input type="file" class="file-input" id="image" name="image" onchange="onImgInput()">`
+    <input type="file" class="file-input" id="image" name="image" onchange="onImgInput(event)">`
 
     strHTMLs += imgs.map(img =>
         `<img src="${img.url}" alt="Image ${img.id}" id="${img.id}" onclick="onImgSelect(+'${img.id}')">`
@@ -37,33 +37,35 @@ function onSetFilterBy(filterBy) {
 }
 
 function onRandomImg() {
+    clearGMeme()
     const randomImgId = getRandomIntInclusive(1, 25)
+    clearGMeme()
     setImg(randomImgId)
     renderMeme()
 }
 
 function onImgSelect(imgId) {
+    clearGMeme()
+    clearGMeme()
     setImg(imgId)
     renderMeme()
 }
 
 function onImgInput(ev) {
+    clearGMeme()
     const reader = new FileReader()
 
     reader.onload = ev => {
         let img = new Image() 
-         
-        img.onload = () =>{
+        img.src = ev.target.result 
+        img.onload = () => {
             setImgFromInput(img.src)
-            console.log(gMeme)
             renderMeme()
         }
-        img.src = ev.target.result
     }
     reader.readAsDataURL(ev.target.files[0])
     console.log('readAsDataURL(ev.target.files[0]):',reader.readAsDataURL(ev.target.files[0]) ) 
 }
-
 //////////////////////////////////////////////////////////////////
 
 function renderKeyword() {
