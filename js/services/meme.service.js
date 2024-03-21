@@ -2,30 +2,17 @@
 const STORAGE_KEY = 'memeDB'
 
 var gMeme = {
-    id: 0,
     isImgInput: false,
     imgSrc: "",
+    // memeSrc: "",
+    // imgSrcInput: "",
     selectedImgId: 0,
     selectedLineIdx: 0,
     lines: [],
 }
+var gMemes = []
 
-
-//creat
-function setImg(imgId) { ////Start a new Meme:
-    gMeme.isImgInput = false
-    gMeme.selectedImgId = imgId
-    createTextLine()
-    return gMeme
-}
-
-function setImgFromInput(imgSrc) { ////also Start a new Meme:
-    gMeme.isImgInput = true
-    gMeme.imgSrc = imgSrc
-    createTextLine()
-    return gMeme
-}
-
+// create
 function createTextLine() {
     let pos
     if (gMeme.lines.length === 0) {
@@ -69,6 +56,25 @@ function getTextLine(lineIdx) {
 }
 
 //update
+
+function setImg(imgId) { ////Start a new Meme:
+    gMeme.isImgInput = false
+    gMeme.selectedImgId = imgId
+    createTextLine()
+    return gMeme
+}
+
+function setImgFromInput(imgSrc) { ////also Start a new Meme:
+    gMeme.isImgInput = true
+    gMeme.imgSrc = imgSrc
+    createTextLine()
+    return gMeme
+}
+function setMemeSrc(memeSrc) {
+    gMeme.memeSrc = memeSrc
+    return gMeme
+}
+
 function setLineTxt(key, value) {
     if (key === "isStrokeText") {
         value = !gMeme.lines[gMeme.selectedLineIdx].isStrokeText // Toggle isStrokeText
@@ -85,10 +91,10 @@ function switchLine(dir) {
     // copy and sort by pos.y
     const linesWithPosY = gMeme.lines.map((line, idx) => ({ idx, posY: line.pos.y }))
     linesWithPosY.sort((a, b) => a.posY - b.posY)
-console.log('linesWithPosY:', linesWithPosY)
+
     //current
     const currentLineIdx = gMeme.selectedLineIdx
-console.log('currentLineIdx:', currentLineIdx)
+
     //go to next by dir
     //because first line is up switch will go with down
     let nextLineIdx
@@ -98,19 +104,20 @@ console.log('currentLineIdx:', currentLineIdx)
     } else {
         nextLineIdx = currLineOrderIdx === gMeme.lines.length - 1 ? 0 : currLineOrderIdx + 1
     }
-console.log('nextLineIdx:', nextLineIdx)
+
     //update selectedLineIdx
     gMeme.selectedLineIdx = linesWithPosY[nextLineIdx].idx
-    console.log('gMeme.selectedLineIdx:', gMeme.selectedLineIdx)
+
 }
 
 function setSelectedLine(clickedPos) {
     const lines = getMeme().lines
 
     for (let i = 0; i < lines.length; i++) {
-        if (isTextLineClicked(clickedPos, lines[i])) {
+        console.log('i:', i)
+        if (isTextLineClicked(clickedPos, i)) {
             gMeme.selectedLineIdx = i
-            return
+            return i
         }
     }
 }
@@ -130,7 +137,9 @@ function removeTextLine() {
 }
 
 function CalcTxtBoxDimensions(lineIdx) {
-    const { pos, txt, size, font } = getTextLine(lineIdx)
+    const line = getTextLine(lineIdx)
+    console.log(line);
+    const { pos, txt, size, font } =line 
 
     // Set font style for measuring text width
     gCtx.font = size + 'px ' + font // You can adjust the font and size as needed
@@ -154,10 +163,11 @@ function CalcTxtBoxDimensions(lineIdx) {
 }
 
 //Check if the click is inside the TextLine
-function isTextLineClicked(clickedPos, lineIdx) {
+function isTextLineClicked(clickedPos,lineIdx) {
+   
     CalcTxtBoxDimensions(lineIdx)
-    // const { boxPos, textWidth, textHeight } = getTxtBoxDimensions(lineIdx)
-    const { boxPos, textWidth, textHeight } = getTextLine(lineIdx)
+    const line = getTextLine(lineIdx)
+    const { boxPos, textWidth, textHeight } = line.txtBoxDimensions
     // Check if the clicked position is within the text box boundaries
     if (
         clickedPos.x >= boxPos.x &&
@@ -183,9 +193,7 @@ function moveTextLine(dx, dy) {
 
 
 ///////////////////////////
-function loadSavedMemes() {
-    loadFromStorage(STORAGE_KEY)
-}
+
 
 function getSavedMeme(memeId) {
     const meme = gMemes.find(meme => memeId === meme.id)

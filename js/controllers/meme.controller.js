@@ -1,4 +1,39 @@
 'use strict'
+var gShouldDrawTextBox = true
+
+function renderMemes() {
+    const memes = loadSavedMemes()
+    memes.forEach((meme) => {
+        renderMeme()
+        strHTMLs += `<img src="${meme.imgSrc}" alt="Meme ${meme.id}" id="${meme.id}" onclick="onSavedMemeSelect('${meme.imgSrc}','Saved')">`
+    })
+
+    const elSavedMemeContainer = document.querySelector('.saved-memes-grid-container')
+    elSavedMemeContainer.innerHTML = strHTMLs.join('')
+
+
+    const elSavedMemes = document.querySelector('.saved-memes-grid-container')
+    elSavedMemes.classList.remove('hide')
+    const elEditor = document.querySelector('.editor-container')
+    elEditor.classList.add('hide')
+    const elGallery = document.querySelector('.gallery')
+    elGallery.classList.add('hide')
+
+}
+
+
+function onSavedMemeSelect(memeSrc) {
+    setImg(memeSrc,'saved')
+    renderMeme()
+}
+
+function loadSavedMemes() {
+    loadFromStorage(STORAGE_KEY) || []
+}
+
+
+
+
 // Render the initial image and text  
 //will be use when the user select/random or upload an img 
 function renderMeme() {
@@ -25,6 +60,8 @@ function renderMeme() {
     elEditor.classList.remove('hide')
     const elGallery = document.querySelector('.gallery')
     elGallery.classList.add('hide')
+    const elSavedMemes = document.querySelector('.saved-memes-grid-container')
+    elSavedMemes.classList.add('hide')
 }
 
 function renderTextLines() {
@@ -38,10 +75,13 @@ function renderTextLine(lineIdx) {
     const meme = getMeme()
     drawTextLine(lineIdx)
 
+    if (!gShouldDrawTextBox) return // dont drawTextBox 
+
     if (lineIdx === meme.selectedLineIdx) {
         drawTextBox(lineIdx)
     }
 }
+
 function drawTextLine(lineIdx) {
     const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine(lineIdx)
     gCtx.font = size + 'px ' + font
@@ -91,24 +131,31 @@ function OnRemoveLine() {
 ///////////////////////////////////////////////////////
 /*load saved memes from local storage*/
 function onLoad() {
-    console.log('Not there yet')
-    // gMemes= loadMemes()
-    // renderMemes(gMemes)
+    renderMemes()
 }
 ///////////////////////////////////////////////////////
 /*save meme to local storge*/
-function onSave() {
-    console.log('Not there yet')
-    // addMeme(gMeme)
-    // showMsg('Saved Your Meme')
-}
+// function onSave() {
+//     gShouldDrawTextBox = false
+//     renderMeme() //without txt box    
+//     // Gets the image from the canvas
+//     const memeSrc = gElCanvas.toDataURL('image/jpeg')
+//     setMemeSrc(memeSrc)
+//     console.log('gMeme:', gMeme)
+//     addMeme(gMeme)
+//     console.log('gMemes:', gMemes)
+//     gShouldDrawTextBox = true
+//     renderMeme()//with txt box
+//     showMsg('Saved Your Meme')
+// }
+
+
 ///////////////////////////////////////////////////////
 /*download meme*/
 
 function onDownloadImg(elLink) {
     const imgContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
     elLink.href = imgContent
-
 }
 ////////////////////////////////////////////////////////
 /*share meme on facebook*/

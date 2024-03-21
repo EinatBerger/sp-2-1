@@ -30,14 +30,14 @@ function addListeners() {
     addMouseListeners()
     addTouchListeners()
 
-    window.addEventListener('resize', () => {
-        resizeCanvas()
+    // window.addEventListener('resize', () => {
+    //     resizeCanvas()
 
-        const txtPos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.2 }
-        createTextLine(txtPos)
+    //     const txtPos = { x: gElCanvas.width / 2, y: gElCanvas.height * 0.2 }
+    //     createTextLine(txtPos)
 
-        renderMeme()
-    })
+    //     renderMeme()
+    // })
 }
 
 function addMouseListeners() {
@@ -58,14 +58,19 @@ function onDown(ev) {
     // Get the event position from mouse or touch
     gStartPos = getEvPos(ev)
 
-    if (!isTextLineClicked(gStartPos)) return
+    const selectedLineIdx = setSelectedLine(gStartPos)
+    if (selectedLineIdx === -1) return
+    
+    // if (!isTextLineClicked(gStartPos)) return
 
     setTextLineDrag(true)
     document.body.style.cursor = 'grabbing'
 }
 
 function onMove(ev) {
-    const { isDrag } = getTextLine()
+    const meme = getMeme()
+
+    const { isDrag } = getTextLine(meme.selectedLineIdx)
     if (!isDrag) return
 
     const pos = getEvPos(ev)

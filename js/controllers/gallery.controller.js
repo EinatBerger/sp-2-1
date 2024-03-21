@@ -8,14 +8,17 @@ var gIsAllKeywords = false
 //design: img gal on mobile, dont see editor, keyword container
 
 function renderGallery() {
+    console.log('gMeme:', gMeme)
     const elEditor = document.querySelector('.editor-container')
     elEditor.classList.add('hide')
+    const elSavedMemes = document.querySelector('.saved-memes-grid-container')
+    elSavedMemes.classList.add('hide')
     const elGallery = document.querySelector('.gallery')
     elGallery.classList.remove('hide')
 
     var imgs = getImgs(gFilterBy)
     var strHTMLs = `<label for="image" class="file-label">Upload Your Own Image File</label>
-    <input type="file" class="file-input" id="image" name="image" onchange="onImgInput(event)">`
+    <input type="file" class="file-input" id="image" name="image" onchange="onImgInput()">`
 
     strHTMLs += imgs.map(img =>
         `<img src="${img.url}" alt="Image ${img.id}" id="${img.id}" onclick="onImgSelect(+'${img.id}')">`
@@ -45,19 +48,49 @@ function onImgSelect(imgId) {
     renderMeme()
 }
 
+// function onImgInput(ev) {
+//     const reader = new FileReader()
+//     reader.onload = ev => {
+//         let img = new Image()
+//         img.src = ev.target.result
+//         img.onload = function () {
+//             setImgFromInput(img.src)
+//             renderMeme()
+//         }
+//     }
+//     reader.readAsDataURL(ev.target.files[0])
+// }
 function onImgInput(ev) {
-    const reader = new FileReader()
-    reader.onload = ev => {
-        let img = new Image()
-        img.src = ev.target.result
-        img.onload = function () {
-            setImgFromInput(img.src)
-            renderMeme()
-        }
-    }
-    reader.readAsDataURL(ev.target.files[0])
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+            setImgFromInput(img.src); // Assuming setImgFromInput is a function to set the image
+            renderMeme(); // Assuming renderMeme is a function to render the canvas
+        };
+        img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(ev.target.files[0]);
 }
 
+// function onImgInput(ev) {
+//     const reader = new FileReader();
+
+//     // Set up onload event for the reader
+//     reader.onload = function(event) {
+//         const img = new Image();
+//         img.onload = function() {
+//             setImg(img.src, 'input'); // Assuming setImg is a function to set the image
+//             renderMeme(); // Assuming renderMeme renders the canvas
+//         };
+//         img.src = event.target.result; // Set the source of the image to the loaded image data
+//     };
+
+//     // Read the uploaded file as a data URL
+//     reader.readAsDataURL(ev.target.files[0]);
+// }
 //////////////////////////////////////////////////////////////////
 
 function renderKeyword() {

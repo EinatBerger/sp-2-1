@@ -51,13 +51,18 @@
             <canvas width="500" height="500"></canvas>
             <section class="meme-editor">
                 <div class="text-line">
-                    <input class="text-input" type="text" placeholder="Add Text Here" oninput="OnSetLineTxt('txt',this.value)">
+                    <input class="text-input" type="text" placeholder="Add Text Here"
+                        oninput="OnSetLineTxt('txt',this.value)">
                     <div class="text-line-buttons">
-                        <button class="btn up"onclick="OnSwitchLine('up')"><img class="icons" src="icons/up.png"></button>
-                        <button class="btn down"onclick="OnSwitchLine('down')"><img class="icons" src="icons/down.png"></button>
-                        <button class="btn switch" onclick="OnSwitchLine('switch')"><img class="icons" src="icons/switch.png"></button>
+                        <button class="btn up" onclick="OnSwitchLine('up')"><img class="icons"
+                                src="icons/up.png"></button>
+                        <button class="btn down" onclick="OnSwitchLine('down')"><img class="icons"
+                                src="icons/down.png"></button>
+                        <button class="btn switch" onclick="OnSwitchLine('switch')"><img class="icons"
+                                src="icons/switch.png"></button>
                         <button class="btn add" onclick="OnAddLine()"><img class="icons" src="icons/add.png"></button>
-                        <button class="btn delete" onclick="OnRemoveLine()"><img class="icons" src="icons/trash.png"></button>
+                        <button class="btn delete" onclick="OnRemoveLine()"><img class="icons"
+                                src="icons/trash.png"></button>
                     </div>
                 </div>
                 <div class="fonts-buttons">
@@ -67,8 +72,9 @@
                             class="icons" src="icons/increaseFont.png"></button>
                     <button class="btn align-to-end" value="end" onclick="OnSetLineTxt('textAlign',this.value)"><img
                             class="icons" src="icons/alignEnd.png"></button>
-                    <button class="btn align-to-center" value="center" onclick="OnSetLineTxt('textAlign',this.value)"><img
-                            class="icons" src="icons/alignCenter.png"></button>
+                    <button class="btn align-to-center" value="center"
+                        onclick="OnSetLineTxt('textAlign',this.value)"><img class="icons"
+                            src="icons/alignCenter.png"></button>
                     <button class="btn align-to-start" value="start" onclick="OnSetLineTxt('textAlign',this.value)"><img
                             class="icons" src="icons/alignStart.png"></button>
                     <select class="font-family" onchange="OnSetLineTxt('font',this.value)">
@@ -81,7 +87,8 @@
                             src="icons/stroke.png"></button>
                     <button class="btn-font-color">
                         <img class="icons" src="icons/fontColor.png">
-                        <input class="font-color" type="color" value="#0000FF" onchange="OnSetLineTxt('fontColor',this.value)">
+                        <input class="font-color" type="color" value="#0000FF"
+                            onchange="OnSetLineTxt('fontColor',this.value)">
                     </button>
                 </div>
                 <div class="emoji-container">
@@ -96,7 +103,9 @@
             </section>
         </div>
     </section>
-
+    <section class="saved-memes-grid-container">
+        <!-- render memes -->
+    </section>
     <div class="user-msg hide"></div>
 
     <script src="js/services/util.service.js"></script>
@@ -106,6 +115,7 @@
     <script src="js/services/meme.service.js"></script>
     <script src="js/controllers/gallery.controller.js"></script>
     <script src="js/controllers/meme.controller.js"></script>
+    <script src="js/controllers/saved.controller.js"></script>
     <script src="js/main.js"></script>
 
 

@@ -1,0 +1,20 @@
+.saved-memes-grid-container {
+
+    overflow-y: auto;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: center;
+    padding-inline: 50px;
+}
+
+
+.saved-memes-grid-container img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 2px solid var(--primary-1);
+    border-radius: 10px;
+    cursor: pointer;
+}
