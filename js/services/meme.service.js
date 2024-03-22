@@ -69,7 +69,7 @@ function setImg(imgSrc, imgSource) { ////Start a new Meme:
     if (imgSource === 'img') {
         gMeme.isImgInput = false
         gMeme.selectedImgId = imgSrc
-        gMeme.imgSrc='img/' + imgSrc + '.jpg'
+        gMeme.imgSrc = 'img/' + imgSrc + '.jpg'
     }
     if (imgSource === 'input') {
         gMeme.isImgInput = true
@@ -147,7 +147,7 @@ function removeTextLine() {
 //////////////////////////////////////////////////
 function CalcTxtBoxDimensions(lineIdx) {
     const line = getTextLine(lineIdx)
-    const { pos, txt, size, font } = line
+    const { pos, txt, size, font, textAlign } = line
 
     // Set font style for measuring text width
     gCtx.font = size + 'px ' + font // You can adjust the font and size as needed
@@ -158,8 +158,21 @@ function CalcTxtBoxDimensions(lineIdx) {
     const textHeight = size
 
     // Calculate coordinates for the text box
-    const x = pos.x - textWidth / 2
-    const y = pos.y - textMetrics.actualBoundingBoxAscent
+    let x
+    let y
+    if (textAlign === 'center') {
+        x = pos.x - textWidth / 2
+        y = pos.y - textMetrics.actualBoundingBoxAscent
+    }
+    if (textAlign === 'end') {
+        x = pos.x - textWidth
+        y = pos.y - textMetrics.actualBoundingBoxAscent
+    }
+    if (textAlign === 'start') {
+        x = pos.x 
+        y = pos.y - textMetrics.actualBoundingBoxAscent
+    }
+
 
     // Update txtBoxDimensions object with calculated values
     gMeme.lines[lineIdx].txtBoxDimensions = {

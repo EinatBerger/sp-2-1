@@ -61,8 +61,6 @@ function openModal(lineIdx) {
     // Apply styling based on text line properties
     elModal.innerText = txt
     elModal.style.font = size + 'px ' + font;
-    elModal.style.textAlign = textAlign;
-    // elModal.style.color = fontColor;
 }
 
 function drawTextLine(lineIdx) {
