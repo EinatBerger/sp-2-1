@@ -18,7 +18,7 @@ function clearGMeme() {
     gMeme.selectedImgId = 0
     gMeme.selectedLineIdx = 0
     gMeme.lines = []
-    
+
 }
 
 // create
@@ -130,6 +130,9 @@ function setSelectedLine(clickedPos) {
             return i
         }
     }
+
+    // Return -1 if no line is clicked
+    return -1
 }
 
 
@@ -170,7 +173,7 @@ function CalcTxtBoxDimensions(lineIdx) {
         y = pos.y - textMetrics.actualBoundingBoxAscent
     }
     if (textAlign === 'start') {
-        x = pos.x 
+        x = pos.x
         y = pos.y - textMetrics.actualBoundingBoxAscent
     }
 
@@ -190,6 +193,12 @@ function isTextLineClicked(clickedPos, lineIdx) {
     const line = getTextLine(lineIdx)
     const { boxPos, textWidth, textHeight } = line.txtBoxDimensions
     // Check if the clicked position is within the text box boundaries
+    console.log('clickedPos:', clickedPos)
+
+    console.log('boxPos:', boxPos)
+    console.log('textWidth:', textWidth)
+    console.log('textHeight:', textHeight)
+
     if (
         clickedPos.x >= boxPos.x &&
         clickedPos.x <= boxPos.x + textWidth &&

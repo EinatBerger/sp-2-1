@@ -13,13 +13,20 @@ function renderMeme() {
     img.onload = function () {
         // Draw the img on the canvas
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        const lines = meme.lines
+        // Check if there are any text lines
+        if (!lines || lines.length === 0) {
+            closeModal()
+            return
+         } 
         renderTextLines()
+        document.querySelector('.text-input').value = meme.lines[meme.selectedLineIdx].txt
     }
     img.src = meme.imgSrc
     // Adjust the canvas to the new image size
     gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
 
-    document.querySelector('.text-input').value = meme.lines[meme.selectedLineIdx].txt
+    
     const elEditor = document.querySelector('.editor-container')
     elEditor.classList.remove('hide')
     const elGallery = document.querySelector('.gallery')
@@ -30,6 +37,13 @@ function renderMeme() {
 
 function renderTextLines() {
     const meme = getMeme()
+    const lines = meme.lines
+     // Check if there are any text lines
+     if (!lines || lines.length === 0) {
+        closeModal()
+        return
+     }
+
     meme.lines.forEach((line, idx) => {
         renderTextLine(idx)
     })
@@ -185,9 +199,9 @@ function moveCarousel(direction) {
     var emoji = event.dataTransfer.getData("text")
     
     // Get the mouse position relative to the canvas
-    var rect = gElCanvas.getBoundingClientRect()
-    var x = event.clientX - rect.left
-    var y = event.clientY - rect.top
+    // var rect = gElCanvas.getBoundingClientRect()
+    var x = event.clientX - gElCanvas.offsetLeft
+    var y = event.clientY - gElCanvas.offsetTop
   
     // Draw the emoji on the canvas at the mouse position
     ctx.font = "40px Arial"

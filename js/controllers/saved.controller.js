@@ -20,17 +20,23 @@
 
 // }
 
+/*save meme to local storge*/
+function onSave() {
+    const meme = getMeme()
+    if (!meme || meme.length === 0) return
+    addMeme(meme)
+    setImg(meme.imgSrc, 'saved')
+    renderMeme()
+    showMsg('Saved Your Meme')
+}
 
-// function onSavedMemeSelect(memeSrc) {
-//     setImg(memeSrc, 'saved')
-//     renderMeme()
-// }
+/*load saved memes from local storage*/
+function onLoadSavedMemes() {
+    loadFromStorage(STORAGE_KEY) || []
+    renderMemes()
+}
 
-// function loadSavedMemes() {
-//     loadFromStorage(STORAGE_KEY) || []
-// }
-
- /*save meme to local storge*/
+ 
 // function onSave() {
 //     gShouldDrawTextBox = false
 //     renderMeme() //without txt box    
@@ -45,7 +51,7 @@
 //     showMsg('Saved Your Meme')
 // }
 
-// /*load saved memes from local storage*/
+// 
 // function onLoad() {
 //     renderMemes()
 // }

@@ -18,7 +18,7 @@
         <nav class="main-nav">
             <ul class="main-nav-list clean-list">
                 <li><button class="nav-btn" onclick="onInit()">Memes Gallery</button></li>
-                <li><button class="nav-btn" onclick="onLoad()">Memes Saved</button></li>
+                <li><button class="nav-btn" onclick="onLoadSavedMemes()">Memes Saved</button></li>
                 <li><button class="nav-btn" onclick="onRandomImg()">I'm Flexible</button></li>
             </ul>
         </nav>
@@ -49,6 +49,7 @@
     <section class="editor-container">
         <div class="editor-main">
             <canvas width="500" height="500"></canvas>
+            <div class="modal"></div>
             <section class="meme-editor">
                 <div class="text-line">
                     <input class="text-input" type="text" placeholder="Add Text Here"
@@ -94,40 +95,40 @@
                 <div class="emoji-carousel">
                     <button class="prev" onclick="moveCarousel(-1)">❮</button>
                     <div class="emoji-container">
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '😀')">😀</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '😂')">😂</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '😍')">😍</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🤑')">🤑</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🤫')">🤫</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🫣')">🫣</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '😠')">😠</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🥳')">🥳</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '😎')">😎</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🎉')">🎉</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🎁')">🎁</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🥇')">🥇</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🪄')">🪄</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🤞')">🤞</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🫵')">🫵</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '👌')">😀</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '👀')">👀</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '👣')">👣</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🍧')">🍧</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🧁')">🧁</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🍸')">🍸</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🤣')">🤣</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🤪')">🤪</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '🤔')">🤔</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '👻')">👻</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '👽')">👽</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '💔')">💔</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '💋')">💋</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '💬')">💬</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '💣')">💣</span>
-                      <span class="emoji" draggable="true" ondragstart="drag(event, '💤')">💤</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '😀')">😀</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '😂')">😂</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '😍')">😍</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🤑')">🤑</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🤫')">🤫</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🫣')">🫣</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '😠')">😠</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🥳')">🥳</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '😎')">😎</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🎉')">🎉</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🎁')">🎁</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🥇')">🥇</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🪄')">🪄</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🤞')">🤞</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🫵')">🫵</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '👌')">😀</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '👀')">👀</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '👣')">👣</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🍧')">🍧</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🧁')">🧁</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🍸')">🍸</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🤣')">🤣</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🤪')">🤪</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '🤔')">🤔</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '👻')">👻</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '👽')">👽</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '💔')">💔</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '💋')">💋</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '💬')">💬</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '💣')">💣</span>
+                        <span class="emoji" draggable="true" ondragstart="drag(event, '💤')">💤</span>
                     </div>
                     <button class="next" onclick="moveCarousel(1)">❯</button>
-                  </div>
+                </div>
                 <div class="actions-buttons">
                     <button class="btn" onclick="onSave()">Save</button>
                     <span>|</span>
@@ -142,7 +143,7 @@
         <!-- render memes -->
     </section>
     <div class="user-msg hide"></div>
-    <div class="modal"></div>
+
 
     <script src="js/services/util.service.js"></script>
     <script src="js/services/storage.service.js"></script>

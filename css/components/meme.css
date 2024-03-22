@@ -11,7 +11,7 @@ canvas{
     border: 2px solid var(--primary-1);
     border-radius: 12px;
     margin: 0.8em 2em 0.8em 2em;
-    z-index: 1;
+    
 }
 
 .meme-editor {
@@ -81,10 +81,9 @@ canvas{
     position: absolute;
     border: 2px solid black;
     border-radius: .3em;
-    opacity: 0;
-    
+    opacity: 0;  
     color: transparent;
-    z-index: 2;
+   
 }
 .emoji-carousel {
     position: relative;
@@ -102,7 +101,7 @@ canvas{
     display: inline-block;
     font-size: 24px;
     padding: 5px;
-    z-index: 2;
+    
   }
   
   .prev, .next {

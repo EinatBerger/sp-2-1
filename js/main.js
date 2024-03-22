@@ -6,7 +6,6 @@ let gStartPos
 const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
 function onInit() {
-
     top5Keywords()
     renderGallery()
 
@@ -14,17 +13,7 @@ function onInit() {
     gCtx = gElCanvas.getContext('2d')
 
     addListeners()
-    // resizeCanvas()
 }
-
-
-// function resizeCanvas() {
-//     const elContainer = document.querySelector('.canvas-container')
-
-//     // Changing the canvas dimension clears the canvas
-//     gElCanvas.width = elContainer.clientWidth
-//     gElCanvas.height = elContainer.clientHeight
-// }
 
 function addListeners() {
     addMouseListeners()
@@ -48,8 +37,9 @@ function onDown(ev) {
     // Save the position we started from...
     // Get the event position from mouse or touch
     gStartPos = getEvPos(ev)
-
+    //check if the start pos is on any line and if yes makes her selected 
     const selectedLineIdx = setSelectedLine(gStartPos)
+    console.log(selectedLineIdx)
     if (selectedLineIdx === -1) return
     
     setTextLineDrag(true)
@@ -80,13 +70,6 @@ function onMove(ev) {
 function onUp() {
     setTextLineDrag(false)
     document.body.style.cursor = 'grab'
-}
-
-function resizeCanvas() {
-    const elContainer = document.querySelector('canvas')
-
-    gElCanvas.width = elContainer.offsetWidth
-    gElCanvas.height = elContainer.offsetHeight
 }
 
 function getEvPos(ev) {
