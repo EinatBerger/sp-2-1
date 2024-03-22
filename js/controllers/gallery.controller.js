@@ -7,6 +7,7 @@ var gIsAllKeywords = false
 //func: memes saved, trans, font keywords.
 
 function renderGallery() {
+    closeModal()
     console.log('gMeme:', gMeme)
     const elEditor = document.querySelector('.editor-container')
     elEditor.classList.add('hide')
@@ -27,6 +28,10 @@ function renderGallery() {
     elImgContainer.innerHTML = strHTMLs
 
     renderKeyword()
+}
+
+function closeModal() {
+	document.querySelector('.modal').style.opacity = 0
 }
 
 function onSetFilterBy(filterBy) {

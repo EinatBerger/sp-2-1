@@ -158,3 +158,40 @@ function doUploadImg(imgDataUrl, onSuccess) {
 }
 ////////////////////////////////////////////////////////////////////////
 
+function moveCarousel(direction) {
+    const elEmojiContainer = document.querySelector('.emoji-container')
+    var step = 50 * direction
+  
+    // Calculate the new scroll position
+    var scrollLeft = elEmojiContainer.scrollLeft + step
+  
+    // Animate the scroll
+    elEmojiContainer.scrollTo({
+      left: scrollLeft,
+      behavior: 'smooth'
+    })
+  }
+
+  function allowDrop(event) {
+    event.preventDefault()
+  }
+  
+  function drag(event, emoji) {
+    event.dataTransfer.setData("text", emoji)
+  }
+  
+  function drop(event) {
+    event.preventDefault()
+    var emoji = event.dataTransfer.getData("text")
+    
+    // Get the mouse position relative to the canvas
+    var rect = gElCanvas.getBoundingClientRect()
+    var x = event.clientX - rect.left
+    var y = event.clientY - rect.top
+  
+    // Draw the emoji on the canvas at the mouse position
+    ctx.font = "40px Arial"
+    ctx.fillText(emoji, x, y)
+  } 
+  
+

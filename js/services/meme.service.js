@@ -18,6 +18,7 @@ function clearGMeme() {
     gMeme.selectedImgId = 0
     gMeme.selectedLineIdx = 0
     gMeme.lines = []
+    
 }
 
 // create

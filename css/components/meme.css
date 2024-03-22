@@ -11,7 +11,7 @@ canvas{
     border: 2px solid var(--primary-1);
     border-radius: 12px;
     margin: 0.8em 2em 0.8em 2em;
-
+    z-index: 1;
 }
 
 .meme-editor {
@@ -82,7 +82,44 @@ canvas{
     border: 2px solid black;
     border-radius: .3em;
     opacity: 0;
-    transition: opacity 300ms;
-    color: transparent;
     
+    color: transparent;
+    z-index: 2;
 }
+.emoji-carousel {
+    position: relative;
+    max-width:500px ; 
+    margin: 0 auto;
+  }
+  
+  .emoji-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+  }
+  
+  .emoji {
+    display: inline-block;
+    font-size: 24px;
+    padding: 5px;
+    z-index: 2;
+  }
+  
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 24px;
+  }
+  
+  .prev {
+    left: 0;
+  }
+  
+  .next {
+    right: 0;
+  }
