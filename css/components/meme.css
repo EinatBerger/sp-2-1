@@ -79,13 +79,10 @@ canvas{
 
 .modal {
     position: absolute;
-
-    padding: 0.3em;
-    background-color: lightgray;
-    border: 1px solid gray;
+    border: 2px solid black;
     border-radius: .3em;
-    
     opacity: 0;
     transition: opacity 300ms;
-
+    color: transparent;
+    
 }

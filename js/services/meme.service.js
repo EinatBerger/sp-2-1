@@ -2,10 +2,9 @@
 const STORAGE_KEY = 'memeDB'
 
 var gMeme = {
+    imgSrc: "",
     isImgInput: false,
-    imgSrc: '',
-    // memeSrc: "",
-    // imgSrcInput: "",
+    isSavedMeme: false,
     selectedImgId: 0,
     selectedLineIdx: 0,
     lines: [],
@@ -13,8 +12,9 @@ var gMeme = {
 var gMemes = []
 
 function clearGMeme() {
-    gMeme.isImgInput = false
     gMeme.imgSrc = ''
+    gMeme.isImgInput = false
+    gMeme.isSavedMeme = false
     gMeme.selectedImgId = 0
     gMeme.selectedLineIdx = 0
     gMeme.lines = []
@@ -65,22 +65,22 @@ function getTextLine(lineIdx) {
 
 //update
 
-function setImg(imgId) { ////Start a new Meme:
-    gMeme.isImgInput = false
-    gMeme.selectedImgId = imgId
+function setImg(imgSrc, imgSource) { ////Start a new Meme:
+    if (imgSource === 'img') {
+        gMeme.isImgInput = false
+        gMeme.selectedImgId = imgSrc
+        gMeme.imgSrc='img/' + imgSrc + '.jpg'
+    }
+    if (imgSource === 'input') {
+        gMeme.isImgInput = true
+        gMeme.imgSrc = imgSrc
+    }
+    if (imgSource === 'saved') {
+        gMeme.isImgInput = false
+        gMeme.isSavedMeme = true
+        gMeme.imgSrc = imgSrc
+    }
     createTextLine()
-    return gMeme
-}
-
-function setImgFromInput(imgSrc) { ////also Start a new Meme:
-    console.log('hi');
-    gMeme.isImgInput = true
-    gMeme.imgSrc = imgSrc
-    createTextLine()
-    return gMeme
-}
-function setMemeSrc(memeSrc) {
-    gMeme.memeSrc = memeSrc
     return gMeme
 }
 
@@ -144,11 +144,10 @@ function removeTextLine() {
         gMeme.selectedLineIdx = 0
     }
 }
-
+//////////////////////////////////////////////////
 function CalcTxtBoxDimensions(lineIdx) {
     const line = getTextLine(lineIdx)
-    console.log(line);
-    const { pos, txt, size, font } =line 
+    const { pos, txt, size, font } = line
 
     // Set font style for measuring text width
     gCtx.font = size + 'px ' + font // You can adjust the font and size as needed
@@ -162,18 +161,17 @@ function CalcTxtBoxDimensions(lineIdx) {
     const x = pos.x - textWidth / 2
     const y = pos.y - textMetrics.actualBoundingBoxAscent
 
-    // Update gTxtBoxDimensions object with calculated values
+    // Update txtBoxDimensions object with calculated values
     gMeme.lines[lineIdx].txtBoxDimensions = {
         boxPos: { x, y },
         textWidth,
         textHeight,
     }
-    // console.log('gMeme:', gMeme)
 }
 
 //Check if the click is inside the TextLine
-function isTextLineClicked(clickedPos,lineIdx) {
-   
+function isTextLineClicked(clickedPos, lineIdx) {
+
     CalcTxtBoxDimensions(lineIdx)
     const line = getTextLine(lineIdx)
     const { boxPos, textWidth, textHeight } = line.txtBoxDimensions
@@ -199,8 +197,6 @@ function moveTextLine(dx, dy) {
     gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
     gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
 }
-
-
 ///////////////////////////
 
 

@@ -39,15 +39,13 @@ function onSetFilterBy(filterBy) {
 function onRandomImg() {
     clearGMeme()
     const randomImgId = getRandomIntInclusive(1, 25)
-    clearGMeme()
-    setImg(randomImgId)
+    setImg(randomImgId,'img')
     renderMeme()
 }
 
 function onImgSelect(imgId) {
     clearGMeme()
-    clearGMeme()
-    setImg(imgId)
+    setImg(imgId,'img')
     renderMeme()
 }
 
@@ -59,7 +57,8 @@ function onImgInput(ev) {
         let img = new Image() 
         img.src = ev.target.result 
         img.onload = () => {
-            setImgFromInput(img.src)
+            // setImgFromInput(img.src)
+            setImg(img.src,'input')
             renderMeme()
         }
     }

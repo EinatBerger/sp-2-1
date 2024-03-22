@@ -8,17 +8,14 @@ function renderMeme() {
     if (!meme || meme.length === 0) return
 
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-
     // Draw the img on the canvas
     const img = new Image()
     img.onload = function () {
         // Draw the img on the canvas
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         renderTextLines()
-
     }
-
-    img.src = (!meme.isImgInput) ? 'img/' + meme.selectedImgId + '.jpg' : meme.imgSrc
+    img.src = meme.imgSrc
     // Adjust the canvas to the new image size
     gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
 
@@ -41,34 +38,32 @@ function renderTextLines() {
 function renderTextLine(lineIdx) {
     const meme = getMeme()
     drawTextLine(lineIdx)
-
-    // if (lineIdx === meme.selectedLineIdx) {
-    //     CalcTxtBoxDimensions(lineIdx);
-    //     const line = getTextLine(lineIdx);
-    //     const { pos, txt, size, font, textAlign, fontColor } = line;
-    //     openModal(pos.x, pos.y, size, font, textAlign, fontColor, txt);
-    // }
-
-
-    if (!gShouldDrawTextBox) return // dont drawTextBox 
-
     if (lineIdx === meme.selectedLineIdx) {
-        drawTextBox(lineIdx)
+        openModal(lineIdx)
     }
 }
 
-// function openModal(x, y, size, font, textAlign, fontColor, text) {
-//     const elModal = document.querySelector('.modal');
-//     elModal.innerText = text;
-//     elModal.style.opacity = 1;
-//     // Position the modal based on the text line coordinates
-//     elModal.style.top = y + 'px';
-//     elModal.style.left = x + 'px';
-//     // Apply styling based on text line properties
-//     elModal.style.font = size + 'px ' + font;
-//     elModal.style.textAlign = textAlign;
-//     elModal.style.color = fontColor;
-// }
+function openModal(lineIdx) {
+    CalcTxtBoxDimensions(lineIdx)
+    const line = getTextLine(lineIdx)
+    const { size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine(lineIdx)
+    const { boxPos} = line.txtBoxDimensions
+
+    const elModal = document.querySelector('.modal')
+    elModal.style.opacity = 1
+   
+    // Position the modal based on the text line coordinates
+    var modalPosX = gElCanvas.offsetLeft+boxPos.x
+    var modalPosY = gElCanvas.offsetTop+boxPos.y
+    elModal.style.top =  modalPosY+ 'px';
+    elModal.style.left = modalPosX + 'px';
+
+    // Apply styling based on text line properties
+    elModal.innerText = txt
+    elModal.style.font = size + 'px ' + font;
+    elModal.style.textAlign = textAlign;
+    // elModal.style.color = fontColor;
+}
 
 function drawTextLine(lineIdx) {
     const { pos, size, font, textAlign, fontColor, isStrokeText, txt } = getTextLine(lineIdx)
@@ -84,16 +79,6 @@ function drawTextLine(lineIdx) {
     }
 }
 
-function drawTextBox(lineIdx) {
-    CalcTxtBoxDimensions(lineIdx)
-    const line = getTextLine(lineIdx)
-    const { boxPos, textWidth, textHeight } = line.txtBoxDimensions
-
-    // Draw the text box
-    gCtx.strokeStyle = 'black' // Set the stroke color
-    gCtx.lineWidth = 2 // Set the line width
-    gCtx.strokeRect(boxPos.x - 2, boxPos.y - 4, textWidth + 4, textHeight + 4) // Draw the rectangle the num are padding
-}
 /////////////////////////////////////////////
 // actions:
 ///////////////////////////////////////////////////////
@@ -122,7 +107,6 @@ function OnRemoveLine() {
 
 ///////////////////////////////////////////////////////
 /*download meme*/
-
 function onDownloadImg(elLink) {
     const imgContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
     elLink.href = imgContent
