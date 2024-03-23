@@ -1,60 +1,60 @@
 'use strict'
 
-// function renderMemes() {
-//     const memes = loadSavedMemes()
-//     memes.forEach((meme) => {
-//         renderMeme()
-//         strHTMLs += `<img src="${meme.imgSrc}" alt="Meme ${meme.id}" id="${meme.id}" onclick="onSavedMemeSelect('${meme.imgSrc}','Saved')">`
-//     })
+function renderMemes() {
+    const elSavedMemes = document.querySelector('.saved-memes')
+    elSavedMemes.classList.remove('hide')
+    const elEditor = document.querySelector('.editor-container')
+    elEditor.classList.add('hide')
+    const elGallery = document.querySelector('.gallery')
+    elGallery.classList.add('hide')
 
-//     const elSavedMemeContainer = document.querySelector('.saved-memes-grid-container')
-//     elSavedMemeContainer.innerHTML = strHTMLs.join('')
+    const savedMemes = loadFromStorage(STORAGE_KEY)
+    const elSavedMemeH2 = document.querySelector('h2')
+    const elSavedMemeContainer = document.querySelector('.saved-memes-grid-container')
 
+    if (!savedMemes || savedMemes.length === 0) {     
+        elSavedMemeH2.innerText = "no saved memes"
+        elSavedMemeContainer.innerText =''
+    }
+    else {
+        elSavedMemeH2.innerText = ""
+        var strHTMLs = savedMemes.map(savedMeme =>
+            `<div class="saved-meme-imgs">
+            <img src="${savedMeme.imageUrl}" alt="Image ${savedMeme.id}" id="${savedMeme.id}" onclick="onSavedMemeSelect('${savedMeme.id}')"> 
+            <button class="delete" onclick="OnRemoveSavedMeme('${savedMeme.id}')">Delete</button>
+            </div>`
+        )
+        elSavedMemeContainer.innerHTML = strHTMLs.join('')
+    }
 
-//     const elSavedMemes = document.querySelector('.saved-memes-grid-container')
-//     elSavedMemes.classList.remove('hide')
-//     const elEditor = document.querySelector('.editor-container')
-//     elEditor.classList.add('hide')
-//     const elGallery = document.querySelector('.gallery')
-//     elGallery.classList.add('hide')
-
-// }
+}
 
 /*save meme to local storge*/
 function onSave() {
-    const meme = getMeme()
-    if (!meme || meme.length === 0) return
-    addMeme(meme)
-    setImg(meme.imgSrc, 'saved')
-    renderMeme()
-    showMsg('Saved Your Meme')
+    const elCanvas = document.querySelector('canvas')
+    elCanvas.toBlob(function(blob) {
+        const imageUrl = URL.createObjectURL(blob) // Create Blob URL
+        addSavedMeme(imageUrl)
+        showMsg('Saved Your Meme')
+    }, 'image/png')
 }
-
 /*load saved memes from local storage*/
 function onLoadSavedMemes() {
-    loadFromStorage(STORAGE_KEY) || []
+    renderMemes()
+}
+function OnRemoveSavedMeme(savedMemeId) {
+    removeSavedMeme(savedMemeId)
+    showMsg('Deleted Your Meme')
     renderMemes()
 }
 
- 
-// function onSave() {
-//     gShouldDrawTextBox = false
-//     renderMeme() //without txt box    
-//     // Gets the image from the canvas
-//     const memeSrc = gElCanvas.toDataURL('image/jpeg')
-//     setMemeSrc(memeSrc)
-//     console.log('gMeme:', gMeme)
-//     addMeme(gMeme)
-//     console.log('gMemes:', gMemes)
-//     gShouldDrawTextBox = true
-//     renderMeme()//with txt box
-//     showMsg('Saved Your Meme')
-// }
+function onSavedMemeSelect(savedMemeId) {
+    clearGMeme()
+    const savedMeme=getSavedMemeById(savedMemeId)
 
-// 
-// function onLoad() {
-//     renderMemes()
-// }
+    setImg(savedMeme.imageUrl,'saved')
+    renderMeme()
+}
 
 function showMsg(action) {
     console.log('msg:', 'msg')

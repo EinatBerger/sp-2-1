@@ -1,5 +1,8 @@
+.saved-memes h2{
+    text-align: center;
+}
 .saved-memes-grid-container {
-
+    
     overflow-y: auto;
     height: 100vh;
     display: grid;
@@ -9,12 +12,17 @@
     padding-inline: 50px;
 }
 
+.saved-meme-imgs{
+position: relative;
+width: 100%;
+aspect-ratio: 1 / 1;
+border: 2px solid var(--primary-1);
+border-radius: 10px;
+cursor: pointer;
+}
+.saved-meme-imgs .delete {
+position: absolute;
+bottom: 10px;
+left: 0;
 
-.saved-memes-grid-container img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border: 2px solid var(--primary-1);
-    border-radius: 10px;
-    cursor: pointer;
 }
