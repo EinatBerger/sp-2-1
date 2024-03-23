@@ -30,26 +30,29 @@
     </header>
 
     <section class="gallery">
-        <section class="filter-search">
-            <div class="search-keywords-list">
-                <input class="search-list" list="keywords-list" placeholder="search"
-                    oninput="onSetFilterBy(this.value)">
-                <datalist id="keywords-list"></datalist>
-                <!-- render keywords-list -->
-                <button class="clear-filter-button" onclick="onClearFilter()">X</button>
-            </div>
-            <div class="keywords-container"></div>
-            <!-- render keywords-btn -->
-        </section>
-        <section class="gallery-imgs-grid-container">
-            <!-- render imgs -->
-        </section>
-
+        <main>
+            <section class="filter-search">
+                <div class="search-keywords-list">
+                    <input class="search-list" list="keywords-list" placeholder="search"
+                        oninput="onSetFilterBy(this.value)">
+                    <datalist id="keywords-list"></datalist>
+                    <!-- render keywords-list -->
+                    <button class="clear-filter-button" onclick="onClearFilter()">X</button>
+                </div>
+                <div class="keywords-container"></div>
+                <!-- render keywords-btn -->
+            </section>
+            <section class="gallery-imgs-grid-container">
+                <!-- render imgs -->
+            </section>
+        </main>
     </section>
     <section class="editor-container">
-        <div class="editor-main">
-            <canvas width="500" height="500"></canvas>
-            <div class="modal"></div>
+        <main class="editor-main">
+            <div class="canvas-container">
+                <canvas width="500" height="500"></canvas>
+                <div class="modal"></div>
+            </div>
             <section class="meme-editor">
                 <div class="text-line">
                     <input class="text-input" type="text" placeholder="Add Text Here"
@@ -87,7 +90,7 @@
                     <button class="btn-stroke" onclick="OnSetLineTxt('isStrokeText',0)"><img class="icons"
                             src="icons/stroke.png"></button>
                     <button class="btn-font-color">
-                        <img class="icons" src="icons/fontColor.png">
+                        <!-- <img class="icons" src="icons/fontColor.png"> -->
                         <input class="font-color" type="color" value="#0000FF"
                             onchange="OnSetLineTxt('fontColor',this.value)">
                     </button>
@@ -137,10 +140,13 @@
                     <button class="btn" onclick="onShareImg()">Facebook</button>
                 </div>
             </section>
-        </div>
+        </main>
     </section>
-    <section class="saved-memes-grid-container">
-        <!-- render memes -->
+    <section class="saved-memes">
+        <h2></h2>
+        <div class="saved-memes-grid-container">
+            <!-- render memes -->
+        </div>
     </section>
     <div class="user-msg hide"></div>
 

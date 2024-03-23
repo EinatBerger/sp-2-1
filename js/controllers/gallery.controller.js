@@ -11,7 +11,7 @@ function renderGallery() {
     console.log('gMeme:', gMeme)
     const elEditor = document.querySelector('.editor-container')
     elEditor.classList.add('hide')
-    const elSavedMemes = document.querySelector('.saved-memes-grid-container')
+    const elSavedMemes = document.querySelector('.saved-memes')
     elSavedMemes.classList.add('hide')
     const elGallery = document.querySelector('.gallery')
     elGallery.classList.remove('hide')
@@ -70,6 +70,8 @@ function onImgInput(ev) {
     reader.readAsDataURL(ev.target.files[0])
     console.log('readAsDataURL(ev.target.files[0]):',reader.readAsDataURL(ev.target.files[0]) ) 
 }
+
+
 //////////////////////////////////////////////////////////////////
 
 function renderKeyword() {

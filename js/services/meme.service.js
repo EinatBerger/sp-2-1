@@ -1,20 +1,19 @@
 'use strict'
-const STORAGE_KEY = 'memeDB'
+const STORAGE_KEY = 'saveMemesDB'
 
 var gMeme = {
     imgSrc: "",
     isImgInput: false,
-    isSavedMeme: false,
+    isImgSaved: false,
     selectedImgId: 0,
     selectedLineIdx: 0,
     lines: [],
 }
-var gMemes = []
+var gSavedMemes = []
 
 function clearGMeme() {
     gMeme.imgSrc = ''
     gMeme.isImgInput = false
-    gMeme.isSavedMeme = false
     gMeme.selectedImgId = 0
     gMeme.selectedLineIdx = 0
     gMeme.lines = []
@@ -51,7 +50,6 @@ function createTextLine() {
         isDrag: false,
         txtBoxDimensions: {},
     }
-
     gMeme.lines.push(newTextLine)
 }
 
@@ -66,7 +64,7 @@ function getTextLine(lineIdx) {
 
 //update
 
-function setImg(imgSrc, imgSource) { ////Start a new Meme:
+function setImg(imgSrc, imgSource) {
     if (imgSource === 'img') {
         gMeme.isImgInput = false
         gMeme.selectedImgId = imgSrc
@@ -77,8 +75,7 @@ function setImg(imgSrc, imgSource) { ////Start a new Meme:
         gMeme.imgSrc = imgSrc
     }
     if (imgSource === 'saved') {
-        gMeme.isImgInput = false
-        gMeme.isSavedMeme = true
+        gMeme.isImgSaved = true
         gMeme.imgSrc = imgSrc
     }
     createTextLine()
@@ -222,38 +219,35 @@ function moveTextLine(dx, dy) {
 }
 ///////////////////////////
 
-
-function getSavedMeme(memeId) {
-    const meme = gMemes.find(meme => memeId === meme.id)
-    return meme
+function getSavedMemes(){
+    const savedMemes=loadFromStorage(STORAGE_KEY)
+    return savedMemes
+}
+function getSavedMemeById(savedMemeId){
+    return gSavedMemes.find(savedMeme => savedMemeId === savedMeme.id)
 }
 
-function addMeme(meme) {
-    const newMeme = _createSavedMeme(meme)
-    gMemes.push(newMeme)
-
-    _saveMemes()
-    return newMeme
+function addSavedMeme(imageUrl){
+    const newSavedMeme = _createSavedMeme(imageUrl)
+    gSavedMemes.unshift(newSavedMeme)
+    saveToStorage(STORAGE_KEY, gSavedMemes)
+    return newSavedMeme
 }
 
-function removeSavedMeme(MemeId) {
-    const idx = gMemes.findIndex((Meme) => Meme.id === MemeId)
-    gMemes.splice(idx, 1)
-
-    _saveMemes()
+function removeSavedMeme(savedMemeId) {
+    const idx = gSavedMemes.findIndex((savedMeme) => gSavedMemes.id === savedMemeId)
+    gSavedMemes.splice(idx, 1)
+    _SavedMemes()
 }
 
 // Private functions
-
-function _createSavedMeme(meme) {
+function _createSavedMeme(imageUrl) {
     return {
         id: makeId(),
-        meme: meme
+        imageUrl:imageUrl
     }
 }
 
-function _saveMemes() {
-    saveToStorage(STORAGE_KEY, gMemes)
+function _SavedMemes() {
+    saveToStorage(STORAGE_KEY, gSavedMemes)
 }
-
-

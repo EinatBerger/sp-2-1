@@ -31,7 +31,7 @@ function renderMeme() {
     elEditor.classList.remove('hide')
     const elGallery = document.querySelector('.gallery')
     elGallery.classList.add('hide')
-    const elSavedMemes = document.querySelector('.saved-memes-grid-container')
+    const elSavedMemes = document.querySelector('.saved-memes')
     elSavedMemes.classList.add('hide')
 }
 
@@ -83,6 +83,7 @@ function drawTextLine(lineIdx) {
     gCtx.textAlign = textAlign
     gCtx.fillStyle = fontColor
     gCtx.strokeStyle = fontColor
+    // gCtx.rotate(70 * Math.PI / 180)
 
     if (isStrokeText) {
         gCtx.strokeText(txt, pos.x, pos.y)

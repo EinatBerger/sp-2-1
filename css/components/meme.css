@@ -1,11 +1,13 @@
+.editor-container{
+background-color: var(--primary--2);
+}
 
 .editor-main{
 display: flex;
-background-color: var(--primary--2);
 height: 100vh;
 }
 
-canvas{
+canvas{   
     height: fit-content;
     width: fit-content;
     border: 2px solid var(--primary-1);
@@ -25,20 +27,13 @@ canvas{
     width: 70%;
 }
 
-.btn-font-color,
-.btn-stroke-color {
-    position: relative;
+.btn-font-color{
+border: none;
 }
 
-.font-color,
-.stroke-color {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
+.font-color{
+    height: 35px;
+    width: 42px;
 }
 
 .text-line>* {
